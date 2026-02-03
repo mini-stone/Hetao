@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lab 1 | Artemis and Bluetooth</title>
+
+  <!-- Match your site theme -->
+  <link href="../css/styles.css" rel="stylesheet" />
+
+  <style>
+    /* Simple readable lab-page styling on top of your theme */
+    .lab-container { max-width: 980px; margin: 0 auto; padding: 2rem 1rem; }
+    .lab-title { margin-top: 1rem; }
+    .pill { display:inline-block; padding:.2rem .6rem; border-radius:999px; font-size:.85rem; }
+    .pill-ok { background:#e8f5e9; }
+    .pill-todo { background:#fff3e0; }
+    .cardish { border: 1px solid rgba(0,0,0,.12); border-radius: 12px; padding: 1rem; margin: 1rem 0; }
+    pre { background: rgba(0,0,0,.05); padding: .9rem; border-radius: 10px; overflow:auto; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+    img { max-width: 100%; border-radius: 10px; }
+    .small { color: rgba(0,0,0,.65); font-size: .95rem; }
+    .toc a { text-decoration: none; }
+    .toc a:hover { text-decoration: underline; }
+    table { width:100%; border-collapse: collapse; margin: .75rem 0; }
+    th, td { border: 1px solid rgba(0,0,0,.15); padding: .5rem; text-align:left; vertical-align: top; }
+    th { background: rgba(0,0,0,.05); }
+  </style>
+</head>
+
+<body>
+  <div class="lab-container">
+    <!-- Header -->
+    <a href="../index.html">← Back to Home</a>
+
+    <h1 class="lab-title">Lab 1: The Artemis Board and Bluetooth</h1>
+    <p class="small">
+      Course: ECE 5160 Fast Robots (Spring 2026) <br/>
+      Student: Hetao Yin <br/>
+      Date: <span class="pill pill-todo">TODO: 2026-02-__</span>
+    </p>
+
+    <div class="cardish toc">
+      <b>Table of Contents</b>
+      <ol>
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#prelab">Prelab</a></li>
+        <li><a href="#tasks">Lab Tasks (1–8)</a></li>
+        <li><a href="#discussion">Discussion</a></li>
+        <li><a href="#grad">5000-level (Optional)</a></li>
+        <li><a href="#refs">References</a></li>
+      </ol>
+      <p class="small">
+        NOTE: Keep the final write-up under <b>1000 words</b> (excluding code blocks/captions if you want to be safe). :contentReference[oaicite:1]{index=1}
+      </p>
+    </div>
+
+    <!-- 1) Overview -->
+    <section id="overview" class="cardish">
+      <h2>1. Overview</h2>
+      <p>
+        <!-- TODO -->
+        <span class="pill pill-todo">TODO</span>
+        Briefly describe what you built in Lab 1A + Lab 1B:
+        Arduino setup, Artemis programming basics, and BLE communication framework between laptop (Python/Jupyter) and Artemis (Arduino).
+      </p>
+
+      <h3>Hardware / Software</h3>
+      <ul>
+        <li><b>Board:</b> SparkFun RedBoard Artemis Nano</li>
+        <li><b>IDE:</b> Arduino IDE</li>
+        <li><b>Python:</b> venv + JupyterLab + bleak (BLE)</li>
+      </ul>
+
+      <h3>Evidence checklist</h3>
+      <ul>
+        <li><span class="pill pill-todo">TODO</span> Photo / screenshot of Artemis connected + correct Port/Board</li>
+        <li><span class="pill pill-todo">TODO</span> Serial output showing MAC address</li>
+        <li><span class="pill pill-todo">TODO</span> Jupyter screenshots showing BLE connected + messages received</li>
+      </ul>
+    </section>
+
+    <!-- 2) Prelab -->
+    <section id="prelab" class="cardish">
+      <h2>2. Prelab</h2>
+
+      <h3>2.1 Setup</h3>
+      <p>
+        <span class="pill pill-todo">TODO</span>
+        Describe the steps you took to set up your computer for Lab 1B:
+        Python version, venv creation, package install, and starting Jupyter server.
+        Mention any issues (driver, port, permissions) and how you fixed them.
+      </p>
+
+      <div class="cardish">
+        <b>Key configuration values (fill these)</b>
+        <table>
+          <tr>
+            <th>Item</th>
+            <th>Value</th>
+            <th>Evidence</th>
+          </tr>
+          <tr>
+            <td>Artemis MAC Address</td>
+            <td><span class="pill pill-todo">TODO: XX:XX:XX:XX:XX:XX</span></td>
+            <td>Screenshot: Serial Monitor / terminal</td>
+          </tr>
+          <tr>
+            <td>BLE Service UUID (your custom one)</td>
+            <td><span class="pill pill-todo">TODO: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</span></td>
+            <td>Screenshot: Arduino define + connections.yaml</td>
+          </tr>
+          <tr>
+            <td>Max write length used</td>
+            <td><span class="pill pill-todo">TODO: 150 bytes (or your value)</span></td>
+            <td>Code comment / reference</td>
+          </tr>
+        </table>
+      </div>
+
+      <h3>2.2 Codebase Understanding</h3>
+      <p>
+        <span class="pill pill-todo">TODO</span>
+        Summarize (in your own words) how BLE works here:
+        Laptop = central, Artemis = peripheral, service + characteristics, write for commands, notify/read for responses. :contentReference[oaicite:2]{index=2}
+      </p>
+
+      <h4>Code snippets (only relevant parts!)</h4>
+      <p class="small">
+        The lab explicitly says: do <b>not</b> paste your entire code; include only key functions / snippets. :contentReference[oaicite:3]{index=3}
+      </p>
+
+      <pre><code>// TODO: paste ONLY relevant snippets, e.g. UUID defines, characteristic init, handle_command()
+// Example (placeholder):
+#define BLE_UUID_TEST_SERVICE "YOUR-UUID-HERE"
+</code></pre>
+    </section>
+
+    <!-- 3) Tasks -->
+    <section id="tasks" class="cardish">
+      <h2>3. Lab Tasks</h2>
+      <p class="small">
+        Below follows tasks 1–8 required by the Lab 1B handout. For each task:
+        explain what you changed, show evidence (screenshot/video), and include minimal code snippets. :contentReference[oaicite:4]{index=4}
+      </p>
+
+      <!-- Task 1 -->
+      <div class="cardish">
+        <h3>Task 1 — ECHO string (PC → Artemis → PC)</h3>
+        <p><span class="pill pill-todo">TODO</span> What I did:</p>
+        <ul>
+          <li>Command used: <code>ECHO</code></li>
+          <li>Expected behavior: PC sends string, Artemis replies augmented string (e.g., <code>"Robot says -&gt; ..."</code>). :contentReference[oaicite:5]{index=5}</li>
+        </ul>
+        <p><span class="pill pill-todo">TODO</span> Evidence:</p>
+        <ul>
+          <li>Screenshot: Jupyter output showing sent string and received augmented response</li>
+        </ul>
+        <pre><code>// TODO: key Arduino snippet: how you parse ECHO and write response</code></pre>
+      </div>
+
+      <!-- Task 2 -->
+      <div class="cardish">
+        <h3>Task 2 — SEND_THREE_FLOATS (extract 3 floats on Artemis)</h3>
+        <p><span class="pill pill-todo">TODO</span> What I did:</p>
+        <ul>
+          <li>Command used: <code>SEND_THREE_FLOATS</code> :contentReference[oaicite:6]{index=6}</li>
+          <li>How floats are parsed (RobotCommand / EString)</li>
+        </ul>
+        <p><span class="pill pill-todo">TODO</span> Evidence:</p>
+        <ul>
+          <li>Screenshot: Serial print or BLE response showing three float values</li>
+        </ul>
+        <pre><code>// TODO: key parsing snippet for 3 floats</code></pre>
+      </div>
+
+      <!-- Task 3 -->
+      <div class="cardish">
+        <h3>Task 3 — GET_TIME_MILLIS (reply “T:123456”)</h3>
+        <p><span class="pill pill-todo">TODO</span> What I did:</p>
+        <ul>
+          <li>Added a new command <code>GET_TIME_MILLIS</code></li>
+          <li>Artemis replies a string like <code>T:123456</code> to the string characteristic :contentReference[oaicite:7]{index=7}</li>
+        </ul>
+        <p><span class="pill pill-todo">TODO</span> Evidence:</p>
+        <ul>
+          <li>Jupyter screenshot showing received <code>T:...</code></li>
+        </ul>
+        <pre><code>// TODO: your code to build "T:%lu" and write to TX string</code></pre>
+      </div>
+
+      <!-- Task 4 -->
+      <div class="cardish">
+        <h3>Task 4 — Python notification handler (parse time from string)</h3>
+        <p><span class="pill pill-todo">TODO</span> What I did:</p>
+        <ul>
+          <li>Set up a notification callback in Python for the TX string characteristic</li>
+          <li>Callback parses incoming bytes/string and extracts the integer time from <code>T:xxxxx</code> :contentReference[oaicite:8]{index=8}</li>
+        </ul>
+        <p><span class="pill pill-todo">TODO</span> Evidence:</p>
+        <ul>
+          <li>Screenshot: Jupyter showing notifications arriving</li>
+        </ul>
+        <pre><code class="language-python"># TODO: your notification handler here (only the relevant function)
+def rx_string_handler(sender, data: bytearray):
+    """
+    sender: characteristic handle/uuid (depends on bleak wrapper)
+    data: raw bytes received via notification
+    """
+    # TODO: decode and parse "T:123456"
+    pass
+</code></pre>
+      </div>
+
+      <!-- Task 5 -->
+      <div class="cardish">
+        <h3>Task 5 — Stream timestamps for a few seconds & compute effective rate</h3>
+        <p><span class="pill pill-todo">TODO</span> What I did:</p>
+        <ul>
+          <li>Python loop requests time repeatedly (or Artemis pushes repeatedly)</li>
+          <li>Collected timestamps for a few seconds and computed effective data transfer rate :contentReference[oaicite:9]{index=9}</li>
+        </ul>
+
+        <p><span class="pill pill-todo">TODO</span> Results:</p>
+        <ul>
+          <li>Duration tested: <code>__</code> s</li>
+          <li># messages received: <code>__</code></li>
+          <li>Effective rate: <code>__</code> msgs/s (and/or bytes/s)</li>
+        </ul>
+
+        <p><span class="pill pill-todo">TODO</span> Plot:</p>
+        <ul>
+          <li>Insert plot image: message index vs timestamp, or inter-arrival time histogram</li>
+        </ul>
+
+        <!-- Replace with your figure -->
+        <img src="images/TODO_plot_task5.png" alt="TODO: Task 5 plot"/>
+        <p class="small">Figure: <span class="pill pill-todo">TODO</span> caption.</p>
+      </div>
+
+      <!-- Task 6 -->
+      <div class="cardish">
+        <h3>Task 6 — Store timestamps in an array, then SEND_TIME_DATA</h3>
+        <p><span class="pill pill-todo">TODO</span> What I did:</p>
+        <ul>
+          <li>Created a global array buffer for timestamps</li>
+          <li>In the loop: store into array until full; avoid overflow</li>
+          <li>Added <code>SEND_TIME_DATA</code> command to send buffered data later :contentReference[oaicite:10]{index=10}</li>
+        </ul>
+
+        <p><span class="pill pill-todo">TODO</span> Evidence:</p>
+        <ul>
+          <li>Python list length matches expected number of sent data points</li>
+        </ul>
+
+        <pre><code>// TODO: key buffer logic (global array + index + "full" condition)</code></pre>
+      </div>
+
+      <!-- Task 7 -->
+      <div class="cardish">
+        <h3>Task 7 — Second array for temperature, GET_TEMP_READINGS</h3>
+        <p><span class="pill pill-todo">TODO</span> What I did:</p>
+        <ul>
+          <li>Added second global array for temperature readings</li>
+          <li>Each entry corresponds with the same index timestamp</li>
+          <li>Added <code>GET_TEMP_READINGS</code> command to send both concurrently :contentReference[oaicite:11]{index=11}</li>
+        </ul>
+
+        <p><span class="pill pill-todo">TODO</span> Data format you used:</p>
+        <ul>
+          <li>Example: <code>T:123456|C:27.3</code> (or your chosen format)</li>
+        </ul>
+
+        <p><span class="pill pill-todo">TODO</span> Plot:</p>
+        <ul>
+          <li>Temperature vs time plot (include image)</li>
+        </ul>
+
+        <img src="images/TODO_temp_vs_time.png" alt="TODO: temp vs time"/>
+        <p class="small">Figure: <span class="pill pill-todo">TODO</span> caption.</p>
+
+        <pre><code class="language-python"># TODO: python parsing logic: append time_list and temp_list</code></pre>
+      </div>
+
+      <!-- Task 8 -->
+      <div class="cardish">
+        <h3>Task 8 — Compare the two methods + RAM estimate</h3>
+        <p class="small">
+          This task asks you to compare:
+          (A) sending each timestamp immediately vs
+          (B) logging into arrays and sending later. It also asks: how quickly can (B) record data,
+          and how much data fits in 384 kB RAM. :contentReference[oaicite:12]{index=12}
+        </p>
+
+        <h4>8.1 Comparison</h4>
+        <table>
+          <tr>
+            <th>Aspect</th>
+            <th>Method A: stream immediately</th>
+            <th>Method B: log then send</th>
+          </tr>
+          <tr>
+            <td>Pros</td>
+            <td><span class="pill pill-todo">TODO</span></td>
+            <td><span class="pill pill-todo">TODO</span></td>
+          </tr>
+          <tr>
+            <td>Cons</td>
+            <td><span class="pill pill-todo">TODO</span></td>
+            <td><span class="pill pill-todo">TODO</span></td>
+          </tr>
+          <tr>
+            <td>When to use</td>
+            <td><span class="pill pill-todo">TODO</span></td>
+            <td><span class="pill pill-todo">TODO</span></td>
+          </tr>
+        </table>
+
+        <h4>8.2 How quickly can method B record?</h4>
+        <p><span class="pill pill-todo">TODO</span>
+          Explain your sampling loop rate (e.g., based on millis() spacing, or a fixed delay).
+          Provide your measured sampling period / frequency.
+        </p>
+
+        <h4>8.3 RAM estimate (384 kB)</h4>
+        <p><span class="pill pill-todo">TODO</span> Show a back-of-the-envelope estimate. Example structure:</p>
+        <ul>
+          <li>Timestamp array type: <code>uint32_t</code> → 4 bytes each</li>
+          <li>Temp array type: <code>float</code> → 4 bytes each</li>
+          <li>Total per sample pair ≈ 8 bytes (not counting overhead)</li>
+          <li>Max samples ≈ 384*1024 / 8 ≈ <span class="pill pill-todo">TODO</span> samples (then discuss overhead/safety margin)</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 4) Discussion -->
+    <section id="discussion" class="cardish">
+      <h2>4. Discussion</h2>
+      <p>
+        <span class="pill pill-todo">TODO</span>
+        Briefly describe:
+        what you learned, challenges you faced, and how you solved them.
+        Keep it succinct (no extra points for extra words). :contentReference[oaicite:13]{index=13}
+      </p>
+
+      <ul>
+        <li><span class="pill pill-todo">TODO</span> Biggest debugging issue and fix</li>
+        <li><span class="pill pill-todo">TODO</span> One insight about BLE throughput/latency</li>
+        <li><span class="pill pill-todo">TODO</span> What you would improve next time</li>
+      </ul>
+    </section>
+
+    <!-- 5) 5000-level optional -->
+    <section id="grad" class="cardish">
+      <h2>5. 5000-level (Optional): Communication Performance Analysis</h2>
+      <p class="small">
+        If you are doing the 5000-level tasks, include at least one plot and answer reliability at higher rates. :contentReference[oaicite:14]{index=14}
+      </p>
+
+      <div class="cardish">
+        <h3>5.1 Effective Data Rate & Overhead (5B vs 120B replies)</h3>
+        <p><span class="pill pill-todo">TODO</span>
+          Describe your experiment: PC sends request, Artemis replies fixed-size payloads; record send/receive times; compute data rate.
+        </p>
+        <ul>
+          <li>Reply sizes tested: <span class="pill pill-todo">TODO</span></li>
+          <li>Data rate results: <span class="pill pill-todo">TODO</span></li>
+          <li>Conclusion about overhead: <span class="pill pill-todo">TODO</span></li>
+        </ul>
+        <img src="images/TODO_overhead_plot.png" alt="TODO: overhead plot"/>
+        <p class="small">Figure: <span class="pill pill-todo">TODO</span> caption.</p>
+      </div>
+
+      <div class="cardish">
+        <h3>5.2 Reliability (high-rate notifications)</h3>
+        <p><span class="pill pill-todo">TODO</span>
+          What happens when sending at a higher rate? Does the computer miss messages?
+          Explain how you tested and what you observed. :contentReference[oaicite:15]{index=15}
+        </p>
+      </div>
+    </section>
+
+    <!-- 6) References -->
+    <section id="refs" class="cardish">
+      <h2>6. References</h2>
+      <ul>
+        <li>Fast Robots 2026 — Lab 1 Handout</li>
+        <li>ArduinoBLE documentation</li>
+        <li>Bleak documentation (Python BLE)</li>
+      </ul>
+      <p class="small">Last updated: <span class="pill pill-todo">TODO</span></p>
+    </section>
+
+    <hr/>
+    <p class="small">
+      Tip: Put your images under <code>labs/images/</code> (same folder level as <code>lab1.html</code>) and link like:
+      <code>&lt;img src="images/your_plot.png"&gt;</code>
+    </p>
+  </div>
+</body>
+</html>
