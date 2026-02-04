@@ -126,16 +126,24 @@ subsequent labs.
       <!-- Task 1 -->
       <div class="cardish">
         <h3>Task 1 — ECHO string (PC → Artemis → PC)</h3>
-        <p><span class="pill pill-todo">TODO</span> What I did:</p>
-        <ul>
-          <li>Command used: <code>ECHO</code></li>
-          <li>Expected behavior: PC sends string, Artemis replies augmented string (e.g., <code>"Robot says -&gt; ..."</code>). :contentReference[oaicite:5]{index=5}</li>
-        </ul>
-        <p><span class="pill pill-todo">TODO</span> Evidence:</p>
-        <ul>
-          <li>Screenshot: Jupyter output showing sent string and received augmented response</li>
-        </ul>
-        <pre><code>// TODO: key Arduino snippet: how you parse ECHO and write response</code></pre>
+        
+       <ul>
+  <li>
+    <b>Command used:</b> <code>ECHO</code>
+  </li>
+  <li>
+    <b>Expected behavior:</b> The PC sends a string to the Artemis board,
+    and the Artemis replies with an augmented version of the string.
+  </li>
+</ul>
+
+<img src="images/task1.png" alt="ECHO command output">
+
+<p class="small">
+Figure X: Output of the ECHO command showing the augmented string returned
+by the Artemis board.
+</p>
+
       </div>
 
       <!-- Task 2 -->
@@ -378,6 +386,7 @@ def rx_string_handler(sender, data: bytearray):
   </div>
 </body>
 </html>
+
 
 
 
