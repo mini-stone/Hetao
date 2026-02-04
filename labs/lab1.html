@@ -83,9 +83,33 @@ subsequent labs.
 
       <h3>2.1 Blink</h3>
       <p>
-        
+      <video width="480" controls>
+  <source src="videos/blink.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+<p class="small">  
       </p>
 
+<h3>2.2 Serial</h3>
+      <p>
+<img src="images/serial.png" alt="Serial monitor output for blink test">
+
+<p class="small">
+    </p>    
+      <h3>2.3 AnalogRead</h3>
+      <p>
+<img src="images/analogRead.png" alt="Analog read output">
+
+<p class="small">
+
+    </p>  
+      <h3>2.4 MircrophoneOut</h3>
+      <p>
+<img src="images/MicrophoneOutput.png" alt="Microphone output values">
+
+<p class="small">
+    </p>  
       </div>
 
 
@@ -102,31 +126,46 @@ subsequent labs.
       <!-- Task 1 -->
       <div class="cardish">
         <h3>Task 1 — ECHO string (PC → Artemis → PC)</h3>
-        <p><span class="pill pill-todo">TODO</span> What I did:</p>
-        <ul>
-          <li>Command used: <code>ECHO</code></li>
-          <li>Expected behavior: PC sends string, Artemis replies augmented string (e.g., <code>"Robot says -&gt; ..."</code>). :contentReference[oaicite:5]{index=5}</li>
-        </ul>
-        <p><span class="pill pill-todo">TODO</span> Evidence:</p>
-        <ul>
-          <li>Screenshot: Jupyter output showing sent string and received augmented response</li>
-        </ul>
-        <pre><code>// TODO: key Arduino snippet: how you parse ECHO and write response</code></pre>
+        
+       <ul>
+  <li>
+    <b>Command used:</b> <code>ECHO</code>
+  </li>
+  <li>
+    <b>Expected behavior:</b> The PC sends a string to the Artemis board,
+    and the Artemis replies with an augmented version of the string.
+  </li>
+</ul>
+
+<img src="images/task1.png" alt="ECHO command output">
+
+<p class="small">
+<p> Evidence: 
+<img src="images/task1_.png" alt="ECHO">
+
+<p class="small">
+</p>
+</p>
+
       </div>
 
       <!-- Task 2 -->
       <div class="cardish">
         <h3>Task 2 — SEND_THREE_FLOATS (extract 3 floats on Artemis)</h3>
-        <p><span class="pill pill-todo">TODO</span> What I did:</p>
+
         <ul>
           <li>Command used: <code>SEND_THREE_FLOATS</code> :contentReference[oaicite:6]{index=6}</li>
           <li>How floats are parsed (RobotCommand / EString)</li>
         </ul>
-        <p><span class="pill pill-todo">TODO</span> Evidence:</p>
-        <ul>
-          <li>Screenshot: Serial print or BLE response showing three float values</li>
-        </ul>
-        <pre><code>// TODO: key parsing snippet for 3 floats</code></pre>
+
+        <img src="images/task2.png" alt="SEND_THREE_FLOATS">
+
+<p class="small">
+  <p> Evidence: 
+<img src="images/task2_.png" alt="SEND_THREE_FLOATS">
+
+<p class="small">
+</p>
       </div>
 
       <!-- Task 3 -->
@@ -354,6 +393,9 @@ def rx_string_handler(sender, data: bytearray):
   </div>
 </body>
 </html>
+
+
+
 
 
 
