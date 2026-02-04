@@ -71,12 +71,6 @@
         <li><b>Python:</b> venv + JupyterLab + bleak (BLE)</li>
       </ul>
 
-      <h3>Evidence checklist</h3>
-      <ul>
-        <li><span class="pill pill-todo">TODO</span> Photo / screenshot of Artemis connected + correct Port/Board</li>
-        <li><span class="pill pill-todo">TODO</span> Serial output showing MAC address</li>
-        <li><span class="pill pill-todo">TODO</span> Jupyter screenshots showing BLE connected + messages received</li>
-      </ul>
     </section>
 
     <!-- 2) Prelab -->
@@ -91,48 +85,9 @@
         Mention any issues (driver, port, permissions) and how you fixed them.
       </p>
 
-      <div class="cardish">
-        <b>Key configuration values (fill these)</b>
-        <table>
-          <tr>
-            <th>Item</th>
-            <th>Value</th>
-            <th>Evidence</th>
-          </tr>
-          <tr>
-            <td>Artemis MAC Address</td>
-            <td><span class="pill pill-todo">TODO: XX:XX:XX:XX:XX:XX</span></td>
-            <td>Screenshot: Serial Monitor / terminal</td>
-          </tr>
-          <tr>
-            <td>BLE Service UUID (your custom one)</td>
-            <td><span class="pill pill-todo">TODO: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</span></td>
-            <td>Screenshot: Arduino define + connections.yaml</td>
-          </tr>
-          <tr>
-            <td>Max write length used</td>
-            <td><span class="pill pill-todo">TODO: 150 bytes (or your value)</span></td>
-            <td>Code comment / reference</td>
-          </tr>
-        </table>
       </div>
 
-      <h3>2.2 Codebase Understanding</h3>
-      <p>
-        <span class="pill pill-todo">TODO</span>
-        Summarize (in your own words) how BLE works here:
-        Laptop = central, Artemis = peripheral, service + characteristics, write for commands, notify/read for responses. :contentReference[oaicite:2]{index=2}
-      </p>
 
-      <h4>Code snippets (only relevant parts!)</h4>
-      <p class="small">
-        The lab explicitly says: do <b>not</b> paste your entire code; include only key functions / snippets. :contentReference[oaicite:3]{index=3}
-      </p>
-
-      <pre><code>// TODO: paste ONLY relevant snippets, e.g. UUID defines, characteristic init, handle_command()
-// Example (placeholder):
-#define BLE_UUID_TEST_SERVICE "YOUR-UUID-HERE"
-</code></pre>
     </section>
 
     <!-- 3) Tasks -->
@@ -398,6 +353,7 @@ def rx_string_handler(sender, data: bytearray):
   </div>
 </body>
 </html>
+
 
 
 
