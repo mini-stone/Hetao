@@ -213,31 +213,48 @@ subsequent labs.
 </div>
 
 
-      <!-- Task 5 -->
-      <div class="cardish">
-        <h3>Task 5 — Stream timestamps for a few seconds & compute effective rate</h3>
-        <p><span class="pill pill-todo">TODO</span> What I did:</p>
-        <ul>
-          <li>Python loop requests time repeatedly (or Artemis pushes repeatedly)</li>
-          <li>Collected timestamps for a few seconds and computed effective data transfer rate :contentReference[oaicite:9]{index=9}</li>
-        </ul>
+  <!-- Task 5 -->
+<div class="cardish">
+  <h3>Task 5 — Continuous timestamp streaming & data rate measurement</h3>
 
-        <p><span class="pill pill-todo">TODO</span> Results:</p>
-        <ul>
-          <li>Duration tested: <code>__</code> s</li>
-          <li># messages received: <code>__</code></li>
-          <li>Effective rate: <code>__</code> msgs/s (and/or bytes/s)</li>
-        </ul>
+  <ul>
+    <li>
+      <b>Task:</b> Write a loop on the Artemis that continuously sends the current time in milliseconds to the laptop using BLE notifications, and process these values in a Python notification handler.
+    </li>
+    <li>
+      <b>Method:</b> The Artemis periodically transmits a timestamp string of the form <code>T:&lt;millis&gt;</code>. The Python callback receives each notification, extracts the timestamp, and records arrival times over a fixed duration.
+    </li>
+  </ul>
 
-        <p><span class="pill pill-todo">TODO</span> Plot:</p>
-        <ul>
-          <li>Insert plot image: message index vs timestamp, or inter-arrival time histogram</li>
-        </ul>
+  <div class="cardish" style="margin-top:.75rem;">
+    <b>Implementation</b>
+    <p>
+      On the Artemis side, a loop periodically reads <code>millis()</code> and sends the value via a BLE string characteristic using notifications.  
+      On the laptop, a Python notification handler decodes the received string, extracts the numeric timestamp, and counts the total number of messages received over several seconds.
+    </p>
+  </div>
 
-        <!-- Replace with your figure -->
-        <img src="images/TODO_plot_task5.png" alt="TODO: Task 5 plot"/>
-        <p class="small">Figure: <span class="pill pill-todo">TODO</span> caption.</p>
-      </div>
+  <div class="cardish" style="margin-top:.75rem;">
+    <b>Results and Analysis</b>
+    <p>
+      Over a measurement window of approximately 5 seconds, 180 timestamp messages were successfully received, corresponding to an average message rate of about
+      <b>35 messages per second</b>. Each message contains a short timestamp string of roughly 8 bytes.
+    </p>
+    <p>
+      Using the measured message rate and payload size, the effective data transfer rate is on the order of
+      <b>2 kbps</b>. This rate is primarily limited by BLE notification throughput rather than by Python-side processing.
+    </p>
+  </div>
+
+  <div class="cardish" style="margin-top:.75rem;">
+    <b>Evidence</b>
+    <img src="images/task5.png" alt="Continuous timestamp notifications">
+    <p class="small">
+      Figure X: Consecutive timestamp values received via BLE notifications, demonstrating continuous transmission from the Artemis.
+    </p>
+  </div>
+</div>
+
 
       <!-- Task 6 -->
       <div class="cardish">
@@ -400,6 +417,7 @@ subsequent labs.
   </div>
 </body>
 </html>
+
 
 
 
