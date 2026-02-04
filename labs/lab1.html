@@ -168,20 +168,27 @@ subsequent labs.
 </div>
 
 
-      <!-- Task 3 -->
-      <div class="cardish">
-        <h3>Task 3 — GET_TIME_MILLIS (reply “T:123456”)</h3>
-        <p><span class="pill pill-todo">TODO</span> What I did:</p>
-        <ul>
-          <li>Added a new command <code>GET_TIME_MILLIS</code></li>
-          <li>Artemis replies a string like <code>T:123456</code> to the string characteristic :contentReference[oaicite:7]{index=7}</li>
-        </ul>
-        <p><span class="pill pill-todo">TODO</span> Evidence:</p>
-        <ul>
-          <li>Jupyter screenshot showing received <code>T:...</code></li>
-        </ul>
-        <pre><code>// TODO: your code to build "T:%lu" and write to TX string</code></pre>
-      </div>
+     <!-- Task 3 -->
+<div class="cardish">
+  <h3>Task 3 — GET_TIME_MILLIS (reply “T:123456”)</h3>
+
+  <ul>
+    <li><b>Command used:</b> <code>GET_TIME_MILLIS</code></li>
+    <li><b>Expected behavior:</b> The Artemis returns the current timestamp (in milliseconds) formatted as <code>T:&lt;millis&gt;</code> over BLE.</li>
+  </ul>
+
+  <div class="cardish" style="margin-top:.75rem;">
+    <b>Implementation (Arduino)</b>
+    <img src="images/task3.png" alt="GET_TIME_MILLIS code">
+    <p class="small">Figure 5: Arduino-side GET_TIME_MILLIS command handling and timestamp string formatting.</p>
+  </div>
+
+  <div class="cardish" style="margin-top:.75rem;">
+    <b>Evidence (Python/Jupyter)</b>
+    <img src="images/task3_.png" alt="GET_TIME_MILLIS output">
+    <p class="small">Figure 6: GET_TIME_MILLIS request sent from the PC and <code>T:&lt;millis&gt;</code> response received from Artemis.</p>
+  </div>
+</div>
 
       <!-- Task 4 -->
       <div class="cardish">
@@ -393,6 +400,7 @@ def rx_string_handler(sender, data: bytearray):
   </div>
 </body>
 </html>
+
 
 
 
