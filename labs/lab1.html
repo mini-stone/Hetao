@@ -418,19 +418,23 @@ subsequent labs.
 
     <!-- 4) Discussion -->
     <section id="discussion" class="cardish">
-      <h2>4. Discussion</h2>
-      <p>
-        <span class="pill pill-todo">TODO</span>
-        Briefly describe:
-        what you learned, challenges you faced, and how you solved them.
-        Keep it succinct (no extra points for extra words). :contentReference[oaicite:13]{index=13}
-      </p>
 
-      <ul>
-        <li><span class="pill pill-todo">TODO</span> Biggest debugging issue and fix</li>
-        <li><span class="pill pill-todo">TODO</span> One insight about BLE throughput/latency</li>
-        <li><span class="pill pill-todo">TODO</span> What you would improve next time</li>
-      </ul>
+  <ul>
+    <li>
+      <b>What I learned:</b> BLE notification throughput is a practical bottleneck for real-time
+      streaming, while buffering data locally enables reliable high-rate recording.
+    </li>
+    <li>
+      <b>Challenges:</b> Achieving stable timing without blocking the main loop and correctly
+      handling asynchronous notifications on the Python side.
+    </li>
+    <li>
+      <b>Solutions:</b> Using <code>millis()</code>-based non-blocking loops and global arrays to
+      buffer data, followed by batch transmission with verification on the laptop.
+    </li>
+  </ul>
+</div>
+
     </section>
 
     <!-- 5) 5000-level optional -->
@@ -482,6 +486,7 @@ subsequent labs.
   </div>
 </body>
 </html>
+
 
 
 
