@@ -191,27 +191,27 @@ subsequent labs.
 </div>
 
       <!-- Task 4 -->
-      <div class="cardish">
-        <h3>Task 4 — Python notification handler (parse time from string)</h3>
-        <p><span class="pill pill-todo">TODO</span> What I did:</p>
-        <ul>
-          <li>Set up a notification callback in Python for the TX string characteristic</li>
-          <li>Callback parses incoming bytes/string and extracts the integer time from <code>T:xxxxx</code> :contentReference[oaicite:8]{index=8}</li>
-        </ul>
-        <p><span class="pill pill-todo">TODO</span> Evidence:</p>
-        <ul>
-          <li>Screenshot: Jupyter showing notifications arriving</li>
-        </ul>
-        <pre><code class="language-python"># TODO: your notification handler here (only the relevant function)
-def rx_string_handler(sender, data: bytearray):
-    """
-    sender: characteristic handle/uuid (depends on bleak wrapper)
-    data: raw bytes received via notification
-    """
-    # TODO: decode and parse "T:123456"
-    pass
-</code></pre>
-      </div>
+<div class="cardish">
+  <h3>Task 4 — Python notification handler (parse time from string)</h3>
+
+  <ul>
+    <li><b>Task:</b> Set up a BLE notification handler in Python to receive the Artemis TX string characteristic.</li>
+    <li><b>Expected behavior:</b> The callback decodes the incoming string and extracts the timestamp from messages formatted as <code>T:&lt;millis&gt;</code>.</li>
+  </ul>
+
+  <div class="cardish" style="margin-top:.75rem;">
+    <b>Implementation (Python)</b>
+    <img src="images/task4.png" alt="Python notification handler code">
+    <p class="small">Figure 7: Python notification callback implementation for receiving and parsing <code>T:&lt;millis&gt;</code> strings.</p>
+  </div>
+
+  <div class="cardish" style="margin-top:.75rem;">
+    <b>Evidence (Python/Jupyter)</b>
+    <img src="images/task4_.png" alt="Notification output showing parsed timestamps">
+    <p class="small">Figure 8: Notifications received from Artemis and timestamps successfully extracted in the callback.</p>
+  </div>
+</div>
+
 
       <!-- Task 5 -->
       <div class="cardish">
@@ -400,6 +400,7 @@ def rx_string_handler(sender, data: bytearray):
   </div>
 </body>
 </html>
+
 
 
 
