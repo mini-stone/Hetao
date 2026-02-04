@@ -440,7 +440,7 @@ subsequent labs.
     <!-- 5) 5000-level optional -->
     <section id="grad" class="cardish">
       <h2>5. 5000-level (Optional): Communication Performance Analysis</h2>
-     <!-- Task X — Effective Data Rate and Overhead -->
+     <!-- Extra_Task_1 — Effective Data Rate and Overhead -->
 <div class="cardish">
   <h3>Task X — Effective Data Rate and Overhead (PC ↔ Artemis)</h3>
 
@@ -470,9 +470,10 @@ subsequent labs.
       <li><b>Python:</b> Store <code>t_send</code> and the pending <code>N</code> before sending. In the notification callback, compute RTT, append it to a per-<code>N</code> log, and record <code>len(data)</code> for verification.</li>
     </ul>
 
-    <!-- FIGURE PLACEHOLDER: code snippet(s) showing RTT logging & handler -->
-    <!-- <img src="images/taskX_code.png" alt="RTT logging + handler code"> -->
-    <p class="small">Figure X. Code used to timestamp send/receive events and compute RTT inside the notification handler (with payload length verification).</p>
+   <img src="images/extra_1.png" alt="caculate and send N">
+    <p class="small">Figure 17. Code used to the length of DATA and send to computer.</p>
+    <img src="images/extra_2.png" alt="RTT">
+    <p class="small">Figure 18. Code used to timestamp send/receive events and compute RTT inside the notification handler (with payload length verification).</p>
   </div>
 
   <div class="cardish" style="margin-top:.75rem;">
@@ -509,16 +510,16 @@ subsequent labs.
     </table>
 
     <!-- FIGURE PLACEHOLDER: screenshot of your printed summary output -->
-    <!-- <img src="images/taskX_summary.png" alt="RTT summary output"> -->
-    <p class="small">Figure X. Console summary of RTT statistics and computed effective data rate for each reply length.</p>
+    <img src="images/dat_1.png" alt="RTT summary output">
+    <p class="small">Figure 19. Console summary of RTT statistics and computed effective data rate for each reply length.</p>
 
     <!-- FIGURE PLACEHOLDER: Effective Data Rate vs Reply Length plot -->
-    <!-- <img src="images/taskX_rate_plot.png" alt="Effective Data Rate vs Reply Length"> -->
-    <p class="small">Figure X. Effective data rate increases with reply length, indicating fixed per-message overhead dominates RTT.</p>
+    <img src="images/data_2.png" alt="Effective Data Rate vs Reply Length">
+    <p class="small">Figure 20. Effective data rate increases with reply length, indicating fixed per-message overhead dominates RTT.</p>
 
     <!-- FIGURE PLACEHOLDER: RTT vs Reply Length plot (with error bars) -->
-    <!-- <img src="images/taskX_rtt_plot.png" alt="RTT vs Reply Length"> -->
-    <p class="small">Figure X. RTT stays roughly in the 200–240 ms range across reply sizes, suggesting payload size has a smaller effect than protocol/stack overhead.</p>
+    <img src="images/data_3.png" alt="RTT vs Reply Length">
+    <p class="small">Figure 21. RTT stays roughly in the 200–240 ms range across reply sizes, suggesting payload size has a smaller effect than protocol/stack overhead.</p>
   </div>
 
   <div class="cardish" style="margin-top:.75rem;">
@@ -565,6 +566,7 @@ subsequent labs.
   </div>
 </body>
 </html>
+
 
 
 
