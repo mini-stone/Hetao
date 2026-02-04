@@ -212,51 +212,41 @@ subsequent labs.
   </div>
 </div>
 
-
-  <!-- Task 5 -->
 <div class="cardish">
-  <h3>Task 5 — Continuous timestamp streaming & data rate measurement</h3>
+  <h3>Task 5 — Timestamp streaming & data rate</h3>
 
   <ul>
     <li>
-      <b>Task:</b> Write a loop on the Artemis that continuously sends the current time in milliseconds to the laptop using BLE notifications, and process these values in a Python notification handler.
-    </li>
-    <li>
-      <b>Method:</b> The Artemis periodically transmits a timestamp string of the form <code>T:&lt;millis&gt;</code>. The Python callback receives each notification, extracts the timestamp, and records arrival times over a fixed duration.
+      <b>Task:</b> Continuously send the current timestamp from the Artemis to the laptop using BLE
+      notifications and determine the effective data transfer rate.
     </li>
   </ul>
 
-  <div class="cardish" style="margin-top:.75rem;">
-    <b>Implementation</b>
-    <p>
-      On the Artemis, a loop uses millis() to periodically send the current timestamp over BLE without blocking execution.
-A previous timestamp is stored, and a new value is transmitted only when a fixed time interval has elapsed.
-Each timestamp is formatted as a string and sent using a BLE notification.
-<img src="images/task5.png" alt= "Continuous timestamp streaming">
-On the laptop, a Python notification handler receives each timestamp and records how many messages arrive within a fixed time window to measure the transmission rate.
-    </p>
-    
-  </div>
+  <b>Implementation</b>
+  <p>
+    A non-blocking loop on the Artemis uses <code>millis()</code> to periodically send the current
+    timestamp as a BLE notification. On the laptop, a Python notification handler extracts the
+    timestamp and counts how many messages are received over a fixed time window.
+  </p>
 
-  <div class="cardish" style="margin-top:.75rem;">
-    <b>Results and Analysis</b>
-    <p>
-      Over a measurement window of approximately 5 seconds, 180 timestamp messages were successfully received, corresponding to an average message rate of about
-      <b>35 messages per second</b>. Each message contains a short timestamp string of roughly 8 bytes.
-    </p>
-    <p>
-      Using the measured message rate and payload size, the effective data transfer rate is on the order of
-      <b>2 kbps</b>. This rate is primarily limited by BLE notification throughput rather than by Python-side processing.
-    </p>
-  </div>
+  <!-- Code -->
+  <img src="images/task5.png" alt="Arduino timestamp loop and Python handler code">
+  <p class="small">
+    Figure X: Arduino loop transmitting <code>millis()</code> timestamps and Python notification handler.
+  </p>
 
-  <div class="cardish" style="margin-top:.75rem;">
-    <b>Evidence</b>
-    <img src="images/task5.png" alt="Continuous timestamp notifications">
-    <p class="small">
-      Figure X: Consecutive timestamp values received via BLE notifications, demonstrating continuous transmission from the Artemis.
-    </p>
-  </div>
+  <!-- Result -->
+  <img src="images/task5_.png" alt="Timestamp output and rate calculation">
+  <p class="small">
+    Figure Y: Consecutive timestamps received on the laptop and calculated message rate.
+  </p>
+
+  <b>Results and Analysis</b>
+  <p>
+    Over approximately 5 seconds, 180 timestamp messages were received, corresponding to an average
+    rate of <b>~35 messages per second</b>. Each message contains a timestamp string of about 8 bytes,
+    resulting in an effective data transfer rate of approximately <b>2 kbps</b>.
+  </p>
 </div>
 
 
@@ -421,6 +411,7 @@ On the laptop, a Python notification handler receives each timestamp and records
   </div>
 </body>
 </html>
+
 
 
 
