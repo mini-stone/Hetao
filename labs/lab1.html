@@ -361,49 +361,58 @@ subsequent labs.
   </p>
 </div>
 
-      <div class="cardish">
-  <h3>Task 8 — Comparison of streaming vs. batch transmission</h3>
+<!-- Task 8 -->
+<div class="cardish">
+  <h3>Task 8 — Streaming vs. Batch Transmission</h3>
 
-  <b>Discussion</b>
+  <b>Methods compared</b>
+  <ul>
+    <li>
+      <b>Streaming (Task 5):</b> Each timestamp is sent immediately from the Artemis to the laptop using BLE notifications.
+    </li>
+    <li>
+      <b>Batch transmission (Tasks 6 & 7):</b> Data is first stored in global arrays on the Artemis and later sent in a loop using a dedicated command.
+    </li>
+  </ul>
+
+  <b>Streaming approach</b>
+  <ul>
+    <li><b>Advantages:</b> Immediate feedback and minimal onboard memory usage.</li>
+    <li><b>Disadvantages:</b> Transmission rate is limited by BLE notification throughput.</li>
+    <li>
+      <b>Observed performance:</b> Approximately 180 timestamps were received over 5 seconds, corresponding to about
+      <b>35 messages per second</b>, resulting in only a few kbps of effective data rate.
+    </li>
+  </ul>
+
+  <b>Batch transmission approach</b>
+  <ul>
+    <li>
+      <b>Advantages:</b> Data recording speed is independent of BLE bandwidth and is determined only by the sampling interval.
+    </li>
+    <li>
+      <b>Disadvantages:</b> Requires additional RAM to store data and delays feedback until transmission is triggered.
+    </li>
+    <li>
+      <b>Observed behavior:</b> All recorded samples were successfully received on the laptop
+      (e.g., 76 timestamps in Task 6 and 67 timestamp–temperature pairs in Task 7).
+    </li>
+  </ul>
+
+  <b>Recording speed comparison</b>
   <p>
-    Two different methods were implemented to transfer timestamped data from the Artemis to the
-    laptop. In the first method (Task 5), timestamps were sent continuously using BLE notifications
-    as soon as they were generated. In the second method (Tasks 6 and 7), data was first stored in
-    global arrays on the Artemis and later transmitted in a batch using a dedicated command.
+    The second method can record data significantly faster than the BLE streaming method because it is not constrained by
+    notification throughput. BLE bandwidth only becomes a limitation during the batch transfer phase.
   </p>
 
+  <b>Memory considerations</b>
   <p>
-    The streaming approach provides immediate feedback and requires minimal onboard storage.
-    However, experimental results showed that this method is limited by BLE notification throughput.
-    In Task 5, approximately 180 timestamps were received over a 5-second window, corresponding to
-    an average rate of about <b>35 messages per second</b>. This limits the effective data transfer
-    rate to only a few kilobits per second.
-  </p>
-
-  <p>
-    In contrast, the batch transmission approach decouples data recording from BLE transmission.
-    In Tasks 6 and 7, timestamp and sensor data were recorded locally at a fixed interval and stored
-    in arrays, then transmitted afterward using a command. Python-side verification confirmed that
-    all recorded data points were received correctly (e.g., 76 timestamps in Task 6 and 67
-    timestamp–temperature pairs in Task 7). This method is more reliable for higher-rate data
-    collection, since recording speed is determined by the sampling interval rather than BLE
-    bandwidth.
-  </p>
-
-  <p>
-    The recording speed of the second method is therefore limited primarily by the chosen sampling
-    interval on the Artemis, and can be significantly faster than the achievable BLE transmission
-    rate. BLE throughput only becomes a constraint during the batch transmission phase.
-  </p>
-
-  <p>
-    The Artemis board provides 384 kB of RAM. Assuming 4 bytes per timestamp, approximately
-    98,000 timestamps could be stored in memory. When storing paired timestamp and temperature data
-    (8 bytes per sample), this corresponds to roughly 49,000 data pairs. In practice, some memory
-    must be reserved for program variables and BLE buffers, so the usable capacity would be slightly
-    lower.
+    The Artemis board has 384 kB of RAM. Assuming 4 bytes per timestamp, approximately 98,000 timestamps could be stored.
+    When storing paired timestamp and temperature data (8 bytes per sample), this corresponds to roughly 49,000 samples.
+    In practice, usable capacity is slightly lower due to program variables and BLE buffers.
   </p>
 </div>
+
 
     </section>
 
@@ -473,6 +482,7 @@ subsequent labs.
   </div>
 </body>
 </html>
+
 
 
 
