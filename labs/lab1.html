@@ -124,49 +124,49 @@ subsequent labs.
       </p>
 
       <!-- Task 1 -->
-      <div class="cardish">
-        <h3>Task 1 — ECHO string (PC → Artemis → PC)</h3>
-        
-       <ul>
-  <li>
-    <b>Command used:</b> <code>ECHO</code>
-  </li>
-  <li>
-    <b>Expected behavior:</b> The PC sends a string to the Artemis board,
-    and the Artemis replies with an augmented version of the string.
-  </li>
-</ul>
+<div class="cardish">
+  <h3>Task 1 — ECHO string (PC → Artemis → PC)</h3>
 
-<img src="images/task1.png" alt="ECHO command output">
+  <ul>
+    <li><b>Command used:</b> <code>ECHO</code></li>
+    <li><b>Expected behavior:</b> The PC sends a string to the Artemis board, and the Artemis replies with an augmented version of the string.</li>
+  </ul>
 
-<p class="small">
-<p> Evidence: 
-<img src="images/task1_.png" alt="ECHO">
+  <div class="cardish" style="margin-top:.75rem;">
+    <b>Implementation (Arduino)</b>
+    <img src="images/task1.png" alt="ECHO command code">
+    <p class="small">Figure 1: Arduino-side ECHO handling and reply construction.</p>
+  </div>
 
-<p class="small">
-</p>
-</p>
+  <div class="cardish" style="margin-top:.75rem;">
+    <b>Evidence (Python/Jupyter)</b>
+    <img src="images/task1_.png" alt="ECHO command output">
+    <p class="small">Figure 2: ECHO command sent from the PC and augmented reply received from Artemis.</p>
+  </div>
+</div>
 
-      </div>
+<!-- Task 2 -->
+<div class="cardish">
+  <h3>Task 2 — SEND_THREE_FLOATS (extract 3 floats on Artemis)</h3>
 
-      <!-- Task 2 -->
-      <div class="cardish">
-        <h3>Task 2 — SEND_THREE_FLOATS (extract 3 floats on Artemis)</h3>
+  <ul>
+    <li><b>Command used:</b> <code>SEND_THREE_FLOATS</code></li>
+    <li><b>Expected behavior:</b> The PC sends three float values, and the Artemis parses and prints/returns the extracted floats.</b></li>
+  </ul>
 
-        <ul>
-          <li>Command used: <code>SEND_THREE_FLOATS</code> :contentReference[oaicite:6]{index=6}</li>
-          <li>How floats are parsed (RobotCommand / EString)</li>
-        </ul>
+  <div class="cardish" style="margin-top:.75rem;">
+    <b>Implementation (Arduino)</b>
+    <img src="images/task2.png" alt="SEND_THREE_FLOATS code">
+    <p class="small">Figure 3: Arduino-side parsing of three floats using RobotCommand/EString.</p>
+  </div>
 
-        <img src="images/task2.png" alt="SEND_THREE_FLOATS">
+  <div class="cardish" style="margin-top:.75rem;">
+    <b>Evidence (Python/Jupyter)</b>
+    <img src="images/task2_.png" alt="SEND_THREE_FLOATS output">
+    <p class="small">Figure 4: Sending three floats from the PC and confirming the parsed values on Artemis.</p>
+  </div>
+</div>
 
-<p class="small">
-  <p> Evidence: 
-<img src="images/task2_.png" alt="SEND_THREE_FLOATS">
-
-<p class="small">
-</p>
-      </div>
 
       <!-- Task 3 -->
       <div class="cardish">
@@ -393,6 +393,7 @@ def rx_string_handler(sender, data: bytearray):
   </div>
 </body>
 </html>
+
 
 
 
