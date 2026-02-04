@@ -232,9 +232,10 @@ subsequent labs.
       On the Artemis, a loop uses millis() to periodically send the current timestamp over BLE without blocking execution.
 A previous timestamp is stored, and a new value is transmitted only when a fixed time interval has elapsed.
 Each timestamp is formatted as a string and sent using a BLE notification.
-
+<img src="images/task5.png" alt= "Continuous timestamp streaming">
 On the laptop, a Python notification handler receives each timestamp and records how many messages arrive within a fixed time window to measure the transmission rate.
     </p>
+    
   </div>
 
   <div class="cardish" style="margin-top:.75rem;">
@@ -420,6 +421,7 @@ On the laptop, a Python notification handler receives each timestamp and records
   </div>
 </body>
 </html>
+
 
 
 
