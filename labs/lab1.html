@@ -434,6 +434,17 @@ subsequent labs.
     </li>
   </ul>
 </div>
+<div class="cardish" style="margin-top:.75rem;">
+  <b>Reliability (high-rate streaming)</b>
+  <p>
+    When I increased the notification send rate from the Artemis to the laptop, the laptop did <b>not</b> reliably read
+    every published data point. The receive rate becomes limited by BLE/OS overhead: in Task 5, over ~5 seconds I only
+    received about <b>180</b> timestamps (≈ <b>35 msg/s</b>). Therefore, if the Artemis publishes faster than this practical
+    throughput, the laptop will fall behind and intermediate updates can be missed. In contrast, the batch method in
+    Tasks 6/7 (store in arrays first, then transmit with a command) is more reliable because the Python lists can be
+    checked to confirm the full dataset was received.
+  </p>
+</div>
 
     </section>
 
@@ -555,17 +566,15 @@ subsequent labs.
         <li>ArduinoBLE documentation</li>
         <li>Bleak documentation (Python BLE)</li>
       </ul>
-      <p class="small">Last updated: <span class="pill pill-todo">TODO</span></p>
+      
     </section>
 
     <hr/>
-    <p class="small">
-      Tip: Put your images under <code>labs/images/</code> (same folder level as <code>lab1.html</code>) and link like:
-      <code>&lt;img src="images/your_plot.png"&gt;</code>
-    </p>
+    
   </div>
 </body>
 </html>
+
 
 
 
