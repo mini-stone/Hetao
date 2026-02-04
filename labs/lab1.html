@@ -276,14 +276,14 @@ subsequent labs.
   <!-- Code: Arduino -->
   <img src="images/task6_1.png" alt="Arduino timestamp array and SEND_TIME_DATA command">
   <p class="small">
-    Figure X: Arduino implementation showing a global timestamp array, controlled insertion logic,
+    Figure 10: Arduino implementation showing a global timestamp array, controlled insertion logic,
     and the <code>SEND_TIME_DATA</code> command used to transmit stored values.
   </p>
 
   <!-- Code: Python -->
   <img src="images/task6_2.png" alt="Python code collecting timestamp data">
   <p class="small">
-    Figure Y: Python code sending the <code>SEND_TIME_DATA</code> command and storing received
+    Figure 11: Python code sending the <code>SEND_TIME_DATA</code> command and storing received
     timestamps in a list.
   </p>
 
@@ -303,6 +303,63 @@ subsequent labs.
   </p>
 </div>
 
+<div class="cardish">
+  <h3>Task 7 — GET_TEMP_READINGS (paired timestamp + temperature arrays)</h3>
+
+  <ul>
+    <li>
+      <b>Task:</b> Add a second array (same length as the timestamp array) to store temperature readings.
+      Each index <code>i</code> stores a corresponding pair: <code>time_data[i]</code> was recorded at the same
+      time as <code>temp_data[i]</code>. Implement <code>GET_TEMP_READINGS</code> to send paired values, and parse
+      them on the laptop into two Python lists.
+    </li>
+  </ul>
+
+  <b>Implementation</b>
+  <p>
+    On the Artemis, two global arrays with the same size are used:
+    <code>time_data[]</code> stores timestamps and <code>temp_data[]</code> stores temperature readings.
+    When a sample is taken, the code writes <code>time_data[idx] = millis()</code> and
+    <code>temp_data[idx] = &lt;temperature&gt;</code> using the same index <code>idx</code>, ensuring that both arrays
+    remain aligned (i.e., element <code>i</code> in each array is a matched pair).
+  </p>
+  <p>
+    A new command <code>GET_TEMP_READINGS</code> loops through both arrays concurrently from
+    <code>i = 0</code> to <code>i = n-1</code> and sends each pair as a single formatted string:
+    <code>D:&lt;time&gt;,&lt;temp&gt;</code>. On the laptop, the notification handler checks the <code>D:</code> prefix,
+    splits the payload at the comma, and appends the parsed values into two lists
+    (<code>time_list</code> and <code>temp_list</code>).
+  </p>
+
+  <!-- Code: Arduino -->
+  <img src="images/task7_1.png" alt="Arduino GET_TEMP_READINGS loops two arrays concurrently">
+  <p class="small">
+    Figure X: <code>GET_TEMP_READINGS</code> iterates through <code>time_data[]</code> and <code>temp_data[]</code>
+    using the same index and transmits paired values as <code>D:&lt;time&gt;,&lt;temp&gt;</code>.
+  </p>
+
+  <!-- Code: Python -->
+  <img src="images/task7_2.png" alt="Python notification handler parses D:time,temp">
+  <p class="small">
+    Figure Y: Notification handler parses strings with prefix <code>D:</code>, splits into timestamp and
+    temperature, and populates <code>time_list</code> and <code>temp_list</code>.
+  </p>
+
+  <b>Results and Analysis</b>
+  <p>
+    After sending <code>GET_TEMP_READINGS</code>, the laptop received matched timestamp–temperature pairs.
+    The output shows <b>67</b> entries in both <code>time_list</code> and <code>temp_list</code>, confirming that the
+    handler populated both lists consistently and that each timestamp corresponds to its temperature
+    reading at the same index.
+  </p>
+
+  <!-- Result -->
+  <img src="images/task7_.png" alt="Received paired timestamp-temperature data">
+  <p class="small">
+    Figure Z: Verification output showing equal list lengths and sample head/tail pairs, demonstrating
+    correct parsing and alignment of timestamped temperature data.
+  </p>
+</div>
 
       <!-- Task 8 -->
       <div class="cardish">
@@ -421,6 +478,7 @@ subsequent labs.
   </div>
 </body>
 </html>
+
 
 
 
