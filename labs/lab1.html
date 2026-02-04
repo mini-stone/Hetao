@@ -229,8 +229,11 @@ subsequent labs.
   <div class="cardish" style="margin-top:.75rem;">
     <b>Implementation</b>
     <p>
-      On the Artemis side, a loop periodically reads <code>millis()</code> and sends the value via a BLE string characteristic using notifications.  
-      On the laptop, a Python notification handler decodes the received string, extracts the numeric timestamp, and counts the total number of messages received over several seconds.
+      On the Artemis, a loop uses millis() to periodically send the current timestamp over BLE without blocking execution.
+A previous timestamp is stored, and a new value is transmitted only when a fixed time interval has elapsed.
+Each timestamp is formatted as a string and sent using a BLE notification.
+
+On the laptop, a Python notification handler receives each timestamp and records how many messages arrive within a fixed time window to measure the transmission rate.
     </p>
   </div>
 
@@ -417,6 +420,7 @@ subsequent labs.
   </div>
 </body>
 </html>
+
 
 
 
