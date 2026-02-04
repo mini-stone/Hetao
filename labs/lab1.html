@@ -79,10 +79,15 @@
 
       <h3>2.1 Setup</h3>
       <p>
-        <span class="pill pill-todo">TODO</span>
-        Describe the steps you took to set up your computer for Lab 1B:
-        Python version, venv creation, package install, and starting Jupyter server.
-        Mention any issues (driver, port, permissions) and how you fixed them.
+        This lab introduces the SparkFun RedBoard Artemis Nano and establishes a basic
+Bluetooth Low Energy (BLE) communication pipeline between the Artemis board and a
+host computer. In Lab 1A, the Arduino development environment was set up and basic
+Artemis programming tasks were completed to verify correct board configuration and
+serial communication. In Lab 1B, a BLE-based communication framework was implemented,
+allowing a laptop (Python/Jupyter) to act as a central device and exchange commands
+and data with the Artemis board acting as a peripheral. This framework forms the
+foundation for reliable data transmission and command-based interaction used in
+subsequent labs.
       </p>
 
       </div>
@@ -353,6 +358,7 @@ def rx_string_handler(sender, data: bytearray):
   </div>
 </body>
 </html>
+
 
 
 
