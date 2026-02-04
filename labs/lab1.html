@@ -276,14 +276,14 @@ subsequent labs.
   <!-- Code: Arduino -->
   <img src="images/task6_1.png" alt="Arduino timestamp array and SEND_TIME_DATA command">
   <p class="small">
-    Figure 10: Arduino implementation showing a global timestamp array, controlled insertion logic,
+    Figure 11: Arduino implementation showing a global timestamp array, controlled insertion logic,
     and the <code>SEND_TIME_DATA</code> command used to transmit stored values.
   </p>
 
   <!-- Code: Python -->
   <img src="images/task6_2.png" alt="Python code collecting timestamp data">
   <p class="small">
-    Figure 11: Python code sending the <code>SEND_TIME_DATA</code> command and storing received
+    Figure 12: Python code sending the <code>SEND_TIME_DATA</code> command and storing received
     timestamps in a list.
   </p>
 
@@ -298,7 +298,7 @@ subsequent labs.
   <!-- Result -->
   <img src="images/task6_.png" alt="Received timestamp data output">
   <p class="small">
-    Figure Z: Output showing the total number of received timestamps along with the first and last
+    Figure 13: Output showing the total number of received timestamps along with the first and last
     values, verifying correct batch transmission.
   </p>
 </div>
@@ -334,14 +334,14 @@ subsequent labs.
   <!-- Code: Arduino -->
   <img src="images/task7_1.png" alt="Arduino GET_TEMP_READINGS loops two arrays concurrently">
   <p class="small">
-    Figure X: <code>GET_TEMP_READINGS</code> iterates through <code>time_data[]</code> and <code>temp_data[]</code>
+    Figure 14: <code>GET_TEMP_READINGS</code> iterates through <code>time_data[]</code> and <code>temp_data[]</code>
     using the same index and transmits paired values as <code>D:&lt;time&gt;,&lt;temp&gt;</code>.
   </p>
 
   <!-- Code: Python -->
   <img src="images/task7_2.png" alt="Python notification handler parses D:time,temp">
   <p class="small">
-    Figure Y: Notification handler parses strings with prefix <code>D:</code>, splits into timestamp and
+    Figure 15: Notification handler parses strings with prefix <code>D:</code>, splits into timestamp and
     temperature, and populates <code>time_list</code> and <code>temp_list</code>.
   </p>
 
@@ -356,7 +356,7 @@ subsequent labs.
   <!-- Result -->
   <img src="images/task7_.png" alt="Received paired timestamp-temperature data">
   <p class="small">
-    Figure Z: Verification output showing equal list lengths and sample head/tail pairs, demonstrating
+    Figure 16: Verification output showing equal list lengths and sample head/tail pairs, demonstrating
     correct parsing and alignment of timestamped temperature data.
   </p>
 </div>
@@ -486,6 +486,7 @@ subsequent labs.
   </div>
 </body>
 </html>
+
 
 
 
