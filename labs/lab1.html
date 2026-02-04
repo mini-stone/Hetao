@@ -276,14 +276,14 @@ subsequent labs.
   <!-- Code: Arduino -->
   <img src="images/task6_1.png" alt="Arduino timestamp array and SEND_TIME_DATA command">
   <p class="small">
-    Figure 10: Arduino implementation showing a global timestamp array, controlled insertion logic,
+    Figure 11: Arduino implementation showing a global timestamp array, controlled insertion logic,
     and the <code>SEND_TIME_DATA</code> command used to transmit stored values.
   </p>
 
   <!-- Code: Python -->
   <img src="images/task6_2.png" alt="Python code collecting timestamp data">
   <p class="small">
-    Figure 11: Python code sending the <code>SEND_TIME_DATA</code> command and storing received
+    Figure 12: Python code sending the <code>SEND_TIME_DATA</code> command and storing received
     timestamps in a list.
   </p>
 
@@ -298,7 +298,7 @@ subsequent labs.
   <!-- Result -->
   <img src="images/task6_.png" alt="Received timestamp data output">
   <p class="small">
-    Figure Z: Output showing the total number of received timestamps along with the first and last
+    Figure 13: Output showing the total number of received timestamps along with the first and last
     values, verifying correct batch transmission.
   </p>
 </div>
@@ -334,14 +334,14 @@ subsequent labs.
   <!-- Code: Arduino -->
   <img src="images/task7_1.png" alt="Arduino GET_TEMP_READINGS loops two arrays concurrently">
   <p class="small">
-    Figure X: <code>GET_TEMP_READINGS</code> iterates through <code>time_data[]</code> and <code>temp_data[]</code>
+    Figure 14: <code>GET_TEMP_READINGS</code> iterates through <code>time_data[]</code> and <code>temp_data[]</code>
     using the same index and transmits paired values as <code>D:&lt;time&gt;,&lt;temp&gt;</code>.
   </p>
 
   <!-- Code: Python -->
   <img src="images/task7_2.png" alt="Python notification handler parses D:time,temp">
   <p class="small">
-    Figure Y: Notification handler parses strings with prefix <code>D:</code>, splits into timestamp and
+    Figure 15: Notification handler parses strings with prefix <code>D:</code>, splits into timestamp and
     temperature, and populates <code>time_list</code> and <code>temp_list</code>.
   </p>
 
@@ -356,107 +356,206 @@ subsequent labs.
   <!-- Result -->
   <img src="images/task7_.png" alt="Received paired timestamp-temperature data">
   <p class="small">
-    Figure Z: Verification output showing equal list lengths and sample head/tail pairs, demonstrating
+    Figure 16: Verification output showing equal list lengths and sample head/tail pairs, demonstrating
     correct parsing and alignment of timestamped temperature data.
   </p>
 </div>
 
-      <!-- Task 8 -->
-      <div class="cardish">
-        <h3>Task 8 — Compare the two methods + RAM estimate</h3>
-        <p class="small">
-          This task asks you to compare:
-          (A) sending each timestamp immediately vs
-          (B) logging into arrays and sending later. It also asks: how quickly can (B) record data,
-          and how much data fits in 384 kB RAM. :contentReference[oaicite:12]{index=12}
-        </p>
+<!-- Task 8 -->
+<div class="cardish">
+  <h3>Task 8 — Streaming vs. Batch Transmission</h3>
 
-        <h4>8.1 Comparison</h4>
-        <table>
-          <tr>
-            <th>Aspect</th>
-            <th>Method A: stream immediately</th>
-            <th>Method B: log then send</th>
-          </tr>
-          <tr>
-            <td>Pros</td>
-            <td><span class="pill pill-todo">TODO</span></td>
-            <td><span class="pill pill-todo">TODO</span></td>
-          </tr>
-          <tr>
-            <td>Cons</td>
-            <td><span class="pill pill-todo">TODO</span></td>
-            <td><span class="pill pill-todo">TODO</span></td>
-          </tr>
-          <tr>
-            <td>When to use</td>
-            <td><span class="pill pill-todo">TODO</span></td>
-            <td><span class="pill pill-todo">TODO</span></td>
-          </tr>
-        </table>
+  <b>Methods compared</b>
+  <ul>
+    <li>
+      <b>Streaming (Task 5):</b> Each timestamp is sent immediately from the Artemis to the laptop using BLE notifications.
+    </li>
+    <li>
+      <b>Batch transmission (Tasks 6 & 7):</b> Data is first stored in global arrays on the Artemis and later sent in a loop using a dedicated command.
+    </li>
+  </ul>
 
-        <h4>8.2 How quickly can method B record?</h4>
-        <p><span class="pill pill-todo">TODO</span>
-          Explain your sampling loop rate (e.g., based on millis() spacing, or a fixed delay).
-          Provide your measured sampling period / frequency.
-        </p>
+  <b>Streaming approach</b>
+  <ul>
+    <li><b>Advantages:</b> Immediate feedback and minimal onboard memory usage.</li>
+    <li><b>Disadvantages:</b> Transmission rate is limited by BLE notification throughput.</li>
+    <li>
+      <b>Observed performance:</b> Approximately 180 timestamps were received over 5 seconds, corresponding to about
+      <b>35 messages per second</b>, resulting in only a few kbps of effective data rate.
+    </li>
+  </ul>
 
-        <h4>8.3 RAM estimate (384 kB)</h4>
-        <p><span class="pill pill-todo">TODO</span> Show a back-of-the-envelope estimate. Example structure:</p>
-        <ul>
-          <li>Timestamp array type: <code>uint32_t</code> → 4 bytes each</li>
-          <li>Temp array type: <code>float</code> → 4 bytes each</li>
-          <li>Total per sample pair ≈ 8 bytes (not counting overhead)</li>
-          <li>Max samples ≈ 384*1024 / 8 ≈ <span class="pill pill-todo">TODO</span> samples (then discuss overhead/safety margin)</li>
-        </ul>
-      </div>
+  <b>Batch transmission approach</b>
+  <ul>
+    <li>
+      <b>Advantages:</b> Data recording speed is independent of BLE bandwidth and is determined only by the sampling interval.
+    </li>
+    <li>
+      <b>Disadvantages:</b> Requires additional RAM to store data and delays feedback until transmission is triggered.
+    </li>
+    <li>
+      <b>Observed behavior:</b> All recorded samples were successfully received on the laptop
+      (e.g., 76 timestamps in Task 6 and 67 timestamp–temperature pairs in Task 7).
+    </li>
+  </ul>
+
+  <b>Recording speed comparison</b>
+  <p>
+    The second method can record data significantly faster than the BLE streaming method because it is not constrained by
+    notification throughput. BLE bandwidth only becomes a limitation during the batch transfer phase.
+  </p>
+
+  <b>Memory considerations</b>
+  <p>
+    The Artemis board has 384 kB of RAM. Assuming 4 bytes per timestamp, approximately 98,000 timestamps could be stored.
+    When storing paired timestamp and temperature data (8 bytes per sample), this corresponds to roughly 49,000 samples.
+    In practice, usable capacity is slightly lower due to program variables and BLE buffers.
+  </p>
+</div>
+
+
     </section>
 
     <!-- 4) Discussion -->
     <section id="discussion" class="cardish">
-      <h2>4. Discussion</h2>
-      <p>
-        <span class="pill pill-todo">TODO</span>
-        Briefly describe:
-        what you learned, challenges you faced, and how you solved them.
-        Keep it succinct (no extra points for extra words). :contentReference[oaicite:13]{index=13}
-      </p>
 
-      <ul>
-        <li><span class="pill pill-todo">TODO</span> Biggest debugging issue and fix</li>
-        <li><span class="pill pill-todo">TODO</span> One insight about BLE throughput/latency</li>
-        <li><span class="pill pill-todo">TODO</span> What you would improve next time</li>
-      </ul>
+  <ul>
+    <li>
+      <b>What I learned:</b> BLE notification throughput is a practical bottleneck for real-time
+      streaming, while buffering data locally enables reliable high-rate recording.
+    </li>
+    <li>
+      <b>Challenges:</b> Achieving stable timing without blocking the main loop and correctly
+      handling asynchronous notifications on the Python side.
+    </li>
+    <li>
+      <b>Solutions:</b> Using <code>millis()</code>-based non-blocking loops and global arrays to
+      buffer data, followed by batch transmission with verification on the laptop.
+    </li>
+  </ul>
+</div>
+<div class="cardish" style="margin-top:.75rem;">
+  <b>Reliability (high-rate streaming)</b>
+  <p>
+    When I increased the notification send rate from the Artemis to the laptop, the laptop did <b>not</b> reliably read
+    every published data point. The receive rate becomes limited by BLE/OS overhead: in Task 5, over ~5 seconds I only
+    received about <b>180</b> timestamps (≈ <b>35 msg/s</b>). Therefore, if the Artemis publishes faster than this practical
+    throughput, the laptop will fall behind and intermediate updates can be missed. In contrast, the batch method in
+    Tasks 6/7 (store in arrays first, then transmit with a command) is more reliable because the Python lists can be
+    checked to confirm the full dataset was received.
+  </p>
+</div>
+
     </section>
 
     <!-- 5) 5000-level optional -->
     <section id="grad" class="cardish">
       <h2>5. 5000-level (Optional): Communication Performance Analysis</h2>
-      <p class="small">
-        If you are doing the 5000-level tasks, include at least one plot and answer reliability at higher rates. :contentReference[oaicite:14]{index=14}
-      </p>
+     <!-- Extra_Task_1 — Effective Data Rate and Overhead -->
+<div class="cardish">
+  <h3>Task X — Effective Data Rate and Overhead (PC ↔ Artemis)</h3>
 
-      <div class="cardish">
-        <h3>5.1 Effective Data Rate & Overhead (5B vs 120B replies)</h3>
-        <p><span class="pill pill-todo">TODO</span>
-          Describe your experiment: PC sends request, Artemis replies fixed-size payloads; record send/receive times; compute data rate.
-        </p>
-        <ul>
-          <li>Reply sizes tested: <span class="pill pill-todo">TODO</span></li>
-          <li>Data rate results: <span class="pill pill-todo">TODO</span></li>
-          <li>Conclusion about overhead: <span class="pill pill-todo">TODO</span></li>
-        </ul>
-        <img src="images/TODO_overhead_plot.png" alt="TODO: overhead plot"/>
-        <p class="small">Figure: <span class="pill pill-todo">TODO</span> caption.</p>
-      </div>
+  <ul>
+    <li><b>Goal:</b> Measure round-trip time (RTT) for a request–reply exchange and compute the effective data rate for different reply sizes (at least 5B and 120B).</li>
+    <li><b>Key questions:</b> Do short packets suffer large overhead? Do larger replies amortize that overhead and improve throughput?</li>
+  </ul>
 
-      <div class="cardish">
-        <h3>5.2 Reliability (high-rate notifications)</h3>
-        <p><span class="pill pill-todo">TODO</span>
-          What happens when sending at a higher rate? Does the computer miss messages?
-          Explain how you tested and what you observed. :contentReference[oaicite:15]{index=15}
-        </p>
-      </div>
+  <div class="cardish" style="margin-top:.75rem;">
+    <b>Method</b>
+    <ul>
+      <li><b>RTT measurement:</b> On the laptop, record <code>t_send</code> immediately before sending a command, and record <code>t_recv</code> inside the BLE notification handler when the reply arrives. Then
+        <code>RTT = t_recv - t_send</code>.
+      </li>
+      <li><b>Why PC timestamps:</b> Using the same PC clock for send/receive avoids cross-device clock mismatch (Artemis <code>millis()</code> cannot be directly subtracted from PC time).</li>
+      <li><b>Effective data rate:</b> For a reply payload length <code>N</code> bytes,
+        <code>rate(N) = N / mean(RTT(N))</code> in bytes/sec, where <code>mean(RTT(N))</code> is averaged over repeated trials.
+      </li>
+      <li><b>Sanity check:</b> Log the received payload length on the laptop to confirm <code>rx_len_mean ≈ N</code> for each test size.</li>
+    </ul>
+  </div>
+
+  <div class="cardish" style="margin-top:.75rem;">
+    <b>Implementation Notes</b>
+    <ul>
+      <li><b>Artemis:</b> Add a command that returns a string payload of exactly <code>N</code> bytes via the TX string characteristic (notify), so different reply sizes can be tested under the same request–reply flow.</li>
+      <li><b>Python:</b> Store <code>t_send</code> and the pending <code>N</code> before sending. In the notification callback, compute RTT, append it to a per-<code>N</code> log, and record <code>len(data)</code> for verification.</li>
+    </ul>
+
+   <img src="images/extra_1.png" alt="caculate and send N">
+    <p class="small">Figure 17. Code used to the length of DATA and send to computer.</p>
+    <img src="images/extra_2.png" alt="RTT">
+    <p class="small">Figure 18. Code used to timestamp send/receive events and compute RTT inside the notification handler (with payload length verification).</p>
+  </div>
+
+  <div class="cardish" style="margin-top:.75rem;">
+    <b>Results</b>
+    <p class="small" style="margin-bottom:.5rem;">
+      The table below summarizes the measured mean RTT and effective rate for several reply sizes. (Each size was repeated multiple times and averaged.)
+    </p>
+
+    <!-- You can keep this table or replace with your exact summary printout -->
+    <table>
+      <thead>
+        <tr>
+          <th>Reply length N (bytes)</th>
+          <th>Mean RTT (ms)</th>
+          <th>Effective rate (bytes/s)</th>
+          <th>rx_len_mean (bytes)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>5</td>
+          <td>~233</td>
+          <td>~21</td>
+          <td>~5</td>
+        </tr>
+        <tr>
+          <td>120</td>
+          <td>~233</td>
+          <td>~515</td>
+          <td>~120</td>
+        </tr>
+        <!-- Add your other tested sizes here (20/40/60/80/100) -->
+      </tbody>
+    </table>
+
+    <!-- FIGURE PLACEHOLDER: screenshot of your printed summary output -->
+    <img src="images/dat_1.png" alt="RTT summary output">
+    <p class="small">Figure 19. Console summary of RTT statistics and computed effective data rate for each reply length.</p>
+
+    <!-- FIGURE PLACEHOLDER: Effective Data Rate vs Reply Length plot -->
+    <img src="images/data_2.png" alt="Effective Data Rate vs Reply Length">
+    <p class="small">Figure 20. Effective data rate increases with reply length, indicating fixed per-message overhead dominates RTT.</p>
+
+    <!-- FIGURE PLACEHOLDER: RTT vs Reply Length plot (with error bars) -->
+    <img src="images/data_3.png" alt="RTT vs Reply Length">
+    <p class="small">Figure 21. RTT stays roughly in the 200–240 ms range across reply sizes, suggesting payload size has a smaller effect than protocol/stack overhead.</p>
+  </div>
+
+  <div class="cardish" style="margin-top:.75rem;">
+    <b>Answers to the prompt</b>
+    <ul>
+      <li>
+        <b>Data rate for 5-byte replies:</b> Using the measured mean RTT (~233 ms), the effective rate is
+        approximately <b>~21 bytes/s</b> (≈ 5 / 0.233).
+      </li>
+      <li>
+        <b>Data rate for 120-byte replies:</b> With a similar RTT (~233 ms), the effective rate increases to
+        approximately <b>~515 bytes/s</b> (≈ 120 / 0.233).
+      </li>
+      <li>
+        <b>Do many short packets introduce overhead?</b> Yes. RTT remains ~constant even when the reply is only a few bytes,
+        so the fixed per-packet BLE/OS/protocol overhead dominates and makes small payloads inefficient.
+      </li>
+      <li>
+        <b>Do larger replies reduce overhead?</b> Yes. Since RTT does not increase proportionally with payload size in this range,
+        sending more bytes per reply amortizes the fixed overhead, producing a much higher effective data rate.
+      </li>
+    </ul>
+  </div>
+</div>
+
     </section>
 
     <!-- 6) References -->
@@ -467,17 +566,21 @@ subsequent labs.
         <li>ArduinoBLE documentation</li>
         <li>Bleak documentation (Python BLE)</li>
       </ul>
-      <p class="small">Last updated: <span class="pill pill-todo">TODO</span></p>
+      
     </section>
 
     <hr/>
-    <p class="small">
-      Tip: Put your images under <code>labs/images/</code> (same folder level as <code>lab1.html</code>) and link like:
-      <code>&lt;img src="images/your_plot.png"&gt;</code>
-    </p>
+    
   </div>
 </body>
 </html>
+
+
+
+
+
+
+
 
 
 
