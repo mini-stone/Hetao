@@ -58,11 +58,15 @@
     <section id="overview" class="cardish">
       <h2>1. Overview</h2>
       <p>
-        <!-- TODO -->
-        <span class="pill pill-todo">TODO</span>
-        Briefly describe what you built in Lab 1A + Lab 1B:
-        Arduino setup, Artemis programming basics, and BLE communication framework between laptop (Python/Jupyter) and Artemis (Arduino).
-      </p>
+        This lab introduces the SparkFun RedBoard Artemis Nano and establishes a basic
+Bluetooth Low Energy (BLE) communication pipeline between the Artemis board and a
+host computer. In Lab 1A, the Arduino development environment was set up and basic
+Artemis programming tasks were completed to verify correct board configuration and
+serial communication. In Lab 1B, a BLE-based communication framework was implemented,
+allowing a laptop (Python/Jupyter) to act as a central device and exchange commands
+and data with the Artemis board acting as a peripheral. This framework forms the
+foundation for reliable data transmission and command-based interaction used in
+subsequent labs.
 
       <h3>Hardware / Software</h3>
       <ul>
@@ -77,17 +81,9 @@
     <section id="prelab" class="cardish">
       <h2>2. Prelab</h2>
 
-      <h3>2.1 Setup</h3>
+      <h3>2.1 Blink</h3>
       <p>
-        This lab introduces the SparkFun RedBoard Artemis Nano and establishes a basic
-Bluetooth Low Energy (BLE) communication pipeline between the Artemis board and a
-host computer. In Lab 1A, the Arduino development environment was set up and basic
-Artemis programming tasks were completed to verify correct board configuration and
-serial communication. In Lab 1B, a BLE-based communication framework was implemented,
-allowing a laptop (Python/Jupyter) to act as a central device and exchange commands
-and data with the Artemis board acting as a peripheral. This framework forms the
-foundation for reliable data transmission and command-based interaction used in
-subsequent labs.
+        
       </p>
 
       </div>
@@ -358,6 +354,7 @@ def rx_string_handler(sender, data: bytearray):
   </div>
 </body>
 </html>
+
 
 
 
