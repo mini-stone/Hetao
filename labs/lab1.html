@@ -361,55 +361,50 @@ subsequent labs.
   </p>
 </div>
 
-      <!-- Task 8 -->
       <div class="cardish">
-        <h3>Task 8 — Compare the two methods + RAM estimate</h3>
-        <p class="small">
-          This task asks you to compare:
-          (A) sending each timestamp immediately vs
-          (B) logging into arrays and sending later. It also asks: how quickly can (B) record data,
-          and how much data fits in 384 kB RAM. :contentReference[oaicite:12]{index=12}
-        </p>
+  <h3>Task 8 — Comparison of streaming vs. batch transmission</h3>
 
-        <h4>8.1 Comparison</h4>
-        <table>
-          <tr>
-            <th>Aspect</th>
-            <th>Method A: stream immediately</th>
-            <th>Method B: log then send</th>
-          </tr>
-          <tr>
-            <td>Pros</td>
-            <td><span class="pill pill-todo">TODO</span></td>
-            <td><span class="pill pill-todo">TODO</span></td>
-          </tr>
-          <tr>
-            <td>Cons</td>
-            <td><span class="pill pill-todo">TODO</span></td>
-            <td><span class="pill pill-todo">TODO</span></td>
-          </tr>
-          <tr>
-            <td>When to use</td>
-            <td><span class="pill pill-todo">TODO</span></td>
-            <td><span class="pill pill-todo">TODO</span></td>
-          </tr>
-        </table>
+  <b>Discussion</b>
+  <p>
+    Two different methods were implemented to transfer timestamped data from the Artemis to the
+    laptop. In the first method (Task 5), timestamps were sent continuously using BLE notifications
+    as soon as they were generated. In the second method (Tasks 6 and 7), data was first stored in
+    global arrays on the Artemis and later transmitted in a batch using a dedicated command.
+  </p>
 
-        <h4>8.2 How quickly can method B record?</h4>
-        <p><span class="pill pill-todo">TODO</span>
-          Explain your sampling loop rate (e.g., based on millis() spacing, or a fixed delay).
-          Provide your measured sampling period / frequency.
-        </p>
+  <p>
+    The streaming approach provides immediate feedback and requires minimal onboard storage.
+    However, experimental results showed that this method is limited by BLE notification throughput.
+    In Task 5, approximately 180 timestamps were received over a 5-second window, corresponding to
+    an average rate of about <b>35 messages per second</b>. This limits the effective data transfer
+    rate to only a few kilobits per second.
+  </p>
 
-        <h4>8.3 RAM estimate (384 kB)</h4>
-        <p><span class="pill pill-todo">TODO</span> Show a back-of-the-envelope estimate. Example structure:</p>
-        <ul>
-          <li>Timestamp array type: <code>uint32_t</code> → 4 bytes each</li>
-          <li>Temp array type: <code>float</code> → 4 bytes each</li>
-          <li>Total per sample pair ≈ 8 bytes (not counting overhead)</li>
-          <li>Max samples ≈ 384*1024 / 8 ≈ <span class="pill pill-todo">TODO</span> samples (then discuss overhead/safety margin)</li>
-        </ul>
-      </div>
+  <p>
+    In contrast, the batch transmission approach decouples data recording from BLE transmission.
+    In Tasks 6 and 7, timestamp and sensor data were recorded locally at a fixed interval and stored
+    in arrays, then transmitted afterward using a command. Python-side verification confirmed that
+    all recorded data points were received correctly (e.g., 76 timestamps in Task 6 and 67
+    timestamp–temperature pairs in Task 7). This method is more reliable for higher-rate data
+    collection, since recording speed is determined by the sampling interval rather than BLE
+    bandwidth.
+  </p>
+
+  <p>
+    The recording speed of the second method is therefore limited primarily by the chosen sampling
+    interval on the Artemis, and can be significantly faster than the achievable BLE transmission
+    rate. BLE throughput only becomes a constraint during the batch transmission phase.
+  </p>
+
+  <p>
+    The Artemis board provides 384 kB of RAM. Assuming 4 bytes per timestamp, approximately
+    98,000 timestamps could be stored in memory. When storing paired timestamp and temperature data
+    (8 bytes per sample), this corresponds to roughly 49,000 data pairs. In practice, some memory
+    must be reserved for program variables and BLE buffers, so the usable capacity would be slightly
+    lower.
+  </p>
+</div>
+
     </section>
 
     <!-- 4) Discussion -->
@@ -478,6 +473,7 @@ subsequent labs.
   </div>
 </body>
 </html>
+
 
 
 
