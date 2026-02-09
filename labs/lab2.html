@@ -64,7 +64,7 @@
     <p class="toc-title">Table of Contents</p>
     <ol>
       <li><a href="#overview">Overview</a></li>
-      <li><a href="#prelab">Prelab</a></li>
+    
       <li><a href="#lab-tasks">Lab Tasks</a></li>
       <li><a href="#discussion">Discussion</a></li>
       <li><a href="#optional">5000-level (Optional)</a></li>
@@ -78,7 +78,9 @@
     <p>
       In this lab, an inertial measurement unit (IMU) was integrated with the Artemis board to measure linear acceleration and angular velocity. The SparkFun ICM-20948 IMU was configured and used to collect accelerometer and gyroscope data for estimating the robot’s orientation.
 
-Accelerometer and gyroscope measurements were analyzed in both time and frequency domains, and filtering techniques were applied to reduce noise and drift. A complementary filter was implemented to fuse both sensors, and IMU data were logged and transmitted over Bluetooth to record and analyze the motion of the robot during a driving experiment.
+
+      
+      Accelerometer and gyroscope measurements were analyzed in both time and frequency domains, and filtering techniques were applied to reduce noise and drift. A complementary filter was implemented to fuse both sensors, and IMU data were logged and transmitted over Bluetooth to record and analyze the motion of the robot during a driving experiment.
     </p>
 
     <h3>Hardware / Software</h3>
@@ -90,17 +92,7 @@ Accelerometer and gyroscope measurements were analyzed in both time and frequenc
       <li>Robot platform: Force1 RC car + Li-Ion battery</li>
     </ul>
 
-    <!-- 2. Prelab -->
-    <h2 id="prelab">2. Prelab</h2>
-    <p>
-      <!-- Fill in: what you read / installed / verified before lab time. -->
-      [TODO: Note that you reviewed SparkFun IMU overview/library/datasheet, skimmed lab instructions, and prepared batteries.]
-    </p>
 
-    <div class="figure">
-      <strong>Prelab Evidence Placeholder</strong><br/>
-      [TODO: Optional image/video placeholder(s) for IMU wiring, library install, etc.]
-    </div>
 
     <!-- 3. Lab Tasks -->
     <h2 id="lab-tasks">3. Lab Tasks</h2>
@@ -109,26 +101,30 @@ Accelerometer and gyroscope measurements were analyzed in both time and frequenc
       and include minimal code snippets (not full code).
     </p>
 
-    <!-- 3.1 Setup the IMU -->
-    <h3 id="setup-imu">3.1 Set up the IMU</h3>
-    <ul>
-      <li><b>IMU wiring:</b> [TODO: photo of Artemis ↔ IMU QWIIC connection]</li>
-      <li><b>Example code:</b> [TODO: show that Example1_Basics runs and prints data]</li>
-      <li><b>AD0_VAL:</b> [TODO: what it represents + whether yours is 0 or 1]</li>
-      <li><b>Sensor behavior:</b> [TODO: discuss accel/gyro changes with rotation/flip/acceleration]</li>
-      <li><b>Startup indicator:</b> [TODO: LED blink pattern on startup]</li>
-    </ul>
+    <h4>Set up the IMU</h4>
 
-    <div class="figure">
-      <strong>Figure X.</strong> Artemis + IMU physical connection photo.<br/>
-      [TODO: <img ...>]
-    </div>
-    <div class="figure">
-      <strong>Figure X.</strong> Example1_Basics output screenshot (accel/gyro).<br/>
-      [TODO]
-    </div>
-    <pre><code>// TODO: minimal code snippet(s) for startup LED indicator, IMU init, AD0_VAL config
-</code></pre>
+<ul>
+  <li>
+    <b>AD0_VAL:</b>
+    <code>AD0_VAL</code> determines the least significant bit of the IMU’s I<sup>2</sup>C address.
+    On the SparkFun ICM-20948 breakout, the AD0 pin is tied low by default, so
+    <code>AD0_VAL = 0</code> was used to communicate with the sensor successfully.
+  </li>
+
+  <li>
+    <b>Sensor behavior:</b>
+    When the board is rotated or flipped, the accelerometer readings change according to the
+    direction of gravity, while the gyroscope reports angular velocity during rotation.
+    During linear acceleration, the accelerometer shows transient changes, whereas the
+    gyroscope remains near zero unless rotational motion is present.
+  </li>
+</ul>
+
+<div class="figure">
+  <strong>Figure 1.</strong> Serial output from <code>Example1_Basics</code> while rotating, flipping,
+  and accelerating the IMU board.
+</div>
+
 
     <!-- 3.2 Accelerometer -->
     <h3 id="accelerometer">3.2 Accelerometer</h3>
