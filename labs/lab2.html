@@ -1,1 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lab 2 | IMU</title>
+
+  <!-- Keep it minimal & Lab1-like (markdown-style page) -->
+  <style>
+    :root{
+      --text:#24292f;
+      --muted:#57606a;
+      --border:#d0d7de;
+      --bg:#ffffff;
+      --codebg:#f6f8fa;
+      --link:#0969da;
+    }
+    html,body{background:var(--bg); color:var(--text); margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji"; line-height:1.6;}
+    .wrap{max-width: 920px; margin: 0 auto; padding: 28px 20px 60px;}
+    a{color:var(--link); text-decoration:none;}
+    a:hover{text-decoration:underline;}
+    h1{font-size: 2rem; margin: 10px 0 8px;}
+    h2{font-size: 1.5rem; margin: 26px 0 10px; padding-top: 6px; border-top: 1px solid var(--border);}
+    h3{font-size: 1.15rem; margin: 18px 0 8px;}
+    p{margin: 8px 0;}
+    .meta{color:var(--muted); margin: 2px 0;}
+    .toc-title{margin-top: 18px; font-weight:600;}
+    ol{margin: 8px 0 12px 22px;}
+    ul{margin: 6px 0 10px 22px;}
+    code{background:var(--codebg); padding: 2px 6px; border-radius: 6px; font-family: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace; font-size: 0.95em;}
+    pre{background:var(--codebg); padding: 12px 14px; border-radius: 10px; overflow:auto; border:1px solid var(--border);}
+    pre code{background:transparent; padding:0;}
+    .figure{
+      border:1px dashed var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      margin: 10px 0;
+      color: var(--muted);
+      background: #fff;
+    }
+    .figure strong{color: var(--text);}
+    .note{
+      border-left: 4px solid var(--border);
+      padding: 10px 12px;
+      background: #fff;
+      color: var(--muted);
+      margin: 12px 0;
+      border-radius: 8px;
+    }
+    .back{display:inline-block; margin-bottom: 10px;}
+    hr{border:none; border-top:1px solid var(--border); margin: 18px 0;}
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+
+    <a class="back" href="../index.html">← Back to Home</a>
+
+    <h1>Lab 2: IMU</h1>
+    <p class="meta">Course: ECE 5160 Fast Robots (Spring 2026)</p>
+    <p class="meta">Student: Hetao Yin</p>
+
+    <p class="toc-title">Table of Contents</p>
+    <ol>
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#prelab">Prelab</a></li>
+      <li><a href="#lab-tasks">Lab Tasks</a></li>
+      <li><a href="#discussion">Discussion</a></li>
+      <li><a href="#optional">5000-level (Optional)</a></li>
+      <li><a href="#references">References</a></li>
+    </ol>
+
+    <div class="note">
+      NOTE: Keep the final write-up under 1000 words (excluding code blocks/captions if you want to be safe).
+    </div>
+
+    <!-- 1. Overview -->
+    <h2 id="overview">1. Overview</h2>
+    <p>
+      <!-- Fill in: 3–6 sentences. What you built, why IMU matters, what you measured, what you demonstrated. -->
+      [TODO: Brief overview of adding the ICM-20948 IMU, powering from battery, collecting time-stamped IMU data, filtering, and recording a stunt.]
+    </p>
+
+    <h3>Hardware / Software</h3>
+    <ul>
+      <li>Board: SparkFun RedBoard Artemis Nano</li>
+      <li>IMU: SparkFun 9DOF ICM-20948 breakout (QWIIC)</li>
+      <li>IDE: Arduino IDE</li>
+      <li>Python: venv + JupyterLab (for plotting / FFT / data parsing)</li>
+      <li>Robot platform: Force1 RC car + Li-Ion battery</li>
+    </ul>
+
+    <!-- 2. Prelab -->
+    <h2 id="prelab">2. Prelab</h2>
+    <p>
+      <!-- Fill in: what you read / installed / verified before lab time. -->
+      [TODO: Note that you reviewed SparkFun IMU overview/library/datasheet, skimmed lab instructions, and prepared batteries.]
+    </p>
+
+    <div class="figure">
+      <strong>Prelab Evidence Placeholder</strong><br/>
+      [TODO: Optional image/video placeholder(s) for IMU wiring, library install, etc.]
+    </div>
+
+    <!-- 3. Lab Tasks -->
+    <h2 id="lab-tasks">3. Lab Tasks</h2>
+    <p>
+      Below follows the Lab 2 write-up sections. For each section: explain what you implemented/changed, show evidence (images/plots/videos),
+      and include minimal code snippets (not full code).
+    </p>
+
+    <!-- 3.1 Setup the IMU -->
+    <h3 id="setup-imu">3.1 Set up the IMU</h3>
+    <ul>
+      <li><b>IMU wiring:</b> [TODO: photo of Artemis ↔ IMU QWIIC connection]</li>
+      <li><b>Example code:</b> [TODO: show that Example1_Basics runs and prints data]</li>
+      <li><b>AD0_VAL:</b> [TODO: what it represents + whether yours is 0 or 1]</li>
+      <li><b>Sensor behavior:</b> [TODO: discuss accel/gyro changes with rotation/flip/acceleration]</li>
+      <li><b>Startup indicator:</b> [TODO: LED blink pattern on startup]</li>
+    </ul>
+
+    <div class="figure">
+      <strong>Figure X.</strong> Artemis + IMU physical connection photo.<br/>
+      [TODO: <img ...>]
+    </div>
+    <div class="figure">
+      <strong>Figure X.</strong> Example1_Basics output screenshot (accel/gyro).<br/>
+      [TODO]
+    </div>
+    <pre><code>// TODO: minimal code snippet(s) for startup LED indicator, IMU init, AD0_VAL config
+</code></pre>
+
+    <!-- 3.2 Accelerometer -->
+    <h3 id="accelerometer">3.2 Accelerometer</h3>
+    <ul>
+      <li><b>Pitch/Roll equations:</b> [TODO: include equations + atan2 usage]</li>
+      <li><b>Static test:</b> [TODO: show output at {-90, 0, 90} degrees for pitch and roll]</li>
+      <li><b>Accuracy / calibration:</b> [TODO: discuss accuracy + optional two-point calibration]</li>
+      <li><b>Noise analysis:</b> [TODO: record data, FFT, discuss spectrum + choose cutoff frequency]</li>
+      <li><b>Low-pass filter:</b> [TODO: implement LPF and show raw vs filtered plot]</li>
+      <li><b>Jupyter plotting:</b> [TODO: time on x-axis, signal on y-axis]</li>
+    </ul>
+
+    <div class="figure">
+      <strong>Figure X.</strong> Pitch/Roll at {-90, 0, 90} degrees (table/edges used as guides).<br/>
+      [TODO]
+    </div>
+    <div class="figure">
+      <strong>Figure X.</strong> Accelerometer FFT magnitude vs frequency (noise spectrum).<br/>
+      [TODO]
+    </div>
+    <div class="figure">
+      <strong>Figure X.</strong> Raw vs filtered accelerometer signal (time series).<br/>
+      [TODO]
+    </div>
+    <pre><code># TODO: minimal Jupyter/Python snippet for plotting and FFT (keep short)
+</code></pre>
+    <pre><code>// TODO: minimal Arduino snippet for accel reading + pitch/roll + low-pass filter
+</code></pre>
+
+    <!-- 3.3 Gyroscope -->
+    <h3 id="gyroscope">3.3 Gyroscope</h3>
+    <ul>
+      <li><b>Angle integration:</b> [TODO: compute pitch/roll/yaw from gyro (sampling dt matters)]</li>
+      <li><b>Comparison:</b> [TODO: compare gyro angles vs accel angles vs filtered accel]</li>
+      <li><b>Sampling frequency effects:</b> [TODO: try different sampling rates, discuss drift/accuracy]</li>
+      <li><b>Complementary filter:</b> [TODO: fuse accel + gyro for stable pitch/roll]</li>
+      <li><b>Demonstration:</b> [TODO: show working range/accuracy, resilience to drift and vibrations]</li>
+    </ul>
+
+    <div class="figure">
+      <strong>Figure X.</strong> Gyro-derived pitch/roll/yaw at different orientations.<br/>
+      [TODO]
+    </div>
+    <div class="figure">
+      <strong>Figure X.</strong> Complementary filter output vs accel-only vs gyro-only.<br/>
+      [TODO]
+    </div>
+    <pre><code>// TODO: minimal Arduino snippet for gyro integration + complementary filter
+</code></pre>
+
+    <!-- 3.4 Sample Data -->
+    <h3 id="sample-data">3.4 Sample Data</h3>
+    <ul>
+      <li><b>Speed up main loop:</b> [TODO: no delays, avoid waiting on IMU-ready, reduce Serial prints]</li>
+      <li><b>Sampling speed:</b> [TODO: how fast you can sample + compare loop rate vs IMU update rate]</li>
+      <li><b>Data logging design:</b>
+        <ul>
+          <li>[TODO: one big array vs multiple arrays (accel vs gyro) justification]</li>
+          <li>[TODO: data type choice (int/float/double/string) justification]</li>
+          <li>[TODO: memory budget on Artemis + seconds of data stored]</li>
+        </ul>
+      </li>
+      <li><b>Time-stamped arrays:</b> [TODO: start/stop logging flags in loop]</li>
+      <li><b>Bluetooth transfer:</b> [TODO: demonstrate ≥ 5 seconds logged and sent to PC over BLE]</li>
+    </ul>
+
+    <div class="figure">
+      <strong>Figure X.</strong> Console output showing sampling rate / loop timing measurement.<br/>
+      [TODO]
+    </div>
+    <div class="figure">
+      <strong>Figure X.</strong> Example plot of logged IMU data (≥ 5 s) after BLE transfer.<br/>
+      [TODO]
+    </div>
+    <pre><code>// TODO: minimal Arduino snippet for (1) fast loop logging into arrays (2) start/stop flags (3) BLE send
+</code></pre>
+    <pre><code># TODO: minimal Python snippet for receiving, parsing, and plotting transferred IMU arrays
+</code></pre>
+
+    <!-- 3.5 Record a stunt -->
+    <h3 id="stunt">3.5 Record a stunt!</h3>
+    <ul>
+      <li><b>Battery mounting:</b> [TODO: note correct polarity red-red / black-black]</li>
+      <li><b>Baseline driving:</b> [TODO: 5 min manual driving observations (speed/turning/accel)]</li>
+      <li><b>Video evidence:</b> [TODO: embed video(s) or link(s)]</li>
+      <li><b>Discussion:</b> [TODO: what you expected to see in IMU during stunt]</li>
+    </ul>
+
+    <div class="figure">
+      <strong>Video X.</strong> Manual driving / stunt recording.<br/>
+      [TODO: &lt;video controls src="videos/lab2/your_video.mp4"&gt;&lt;/video&gt; or a hosted link]
+    </div>
+
+    <!-- 3.6 Pack up (optional section, but keeps flow complete) -->
+    <h3 id="pack-up">3.6 Pack up</h3>
+    <ul>
+      <li>[TODO: batteries disconnected, shared batteries returned to chargers, AA returned to TAs]</li>
+    </ul>
+
+    <!-- 4. Discussion -->
+    <h2 id="discussion">4. Discussion</h2>
+    <ul>
+      <li><b>Key takeaways:</b> [TODO]</li>
+      <li><b>Biggest issues & fixes:</b> [TODO]</li>
+      <li><b>Filter design choices:</b> [TODO: cutoff frequency reasoning + complementary filter parameter]</li>
+      <li><b>What you would improve next:</b> [TODO]</li>
+    </ul>
+
+    <!-- 5. 5000-level (Optional) -->
+    <h2 id="optional">5. 5000-level (Optional)</h2>
+    <p>
+      [TODO: If required. Otherwise: "No additional tasks for 5000-level students in this lab."]
+    </p>
+
+    <!-- 6. References -->
+    <h2 id="references">6. References</h2>
+    <ol>
+      <li>[TODO: SparkFun ICM-20948 library / datasheet / course handout link]</li>
+      <li>[TODO: Any FFT tutorial used]</li>
+      <li>[TODO: Any additional sources]</li>
+    </ol>
+
+    <hr/>
+    <p class="meta">
+      Hosted on GitHub Pages.
+    </p>
+
+  </div>
+</body>
+</html>
 
