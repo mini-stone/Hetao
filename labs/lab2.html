@@ -177,7 +177,7 @@
   concentrated below approximately 4–5 Hz, while higher frequencies are dominated by noise.
   <br><br>
 
-  Based on the FFT, a low-pass filter cutoff of about 5 Hz was selected. This cutoff retains
+  Based on the FFT, a low-pass filter cutoff of about 4 Hz was selected. This cutoff retains
   motion-related information while suppressing high-frequency vibrational noise. Lower
   cutoffs oversmooth the signal, whereas higher cutoffs allow excessive noise to pass.
   <br><br>
@@ -212,7 +212,34 @@
     <!-- 3.3 Gyroscope -->
     <h3 id="gyroscope">3.3 Gyroscope</h3>
     <ul>
-      <li><b>Angle integration:</b> [TODO: compute pitch/roll/yaw from gyro (sampling dt matters)]</li>
+      <li>
+  <b>Angle integration:</b>
+  <br><br>
+
+  <!-- Video -->
+  <div>
+    <div style="font-weight:600; margin-bottom:6px;">
+      Real-time roll/pitch from gyroscope integration
+    </div>
+    <video src="images/3.3.mp4"
+           controls
+           style="max-width:100%; border-radius:8px;">
+    </video>
+  </div>
+
+  <br>
+
+  <!-- Image (code screenshot) -->
+  <div>
+    <div style="font-weight:600; margin-bottom:6px;">
+      Gyroscope angle integration code
+    </div>
+    <img src="images/3.3_1.png"
+         alt="Gyroscope angle integration code screenshot"
+         style="max-width:100%; height:auto; border-radius:8px;">
+  </div>
+</li>
+
       <li><b>Comparison:</b> [TODO: compare gyro angles vs accel angles vs filtered accel]</li>
       <li><b>Sampling frequency effects:</b> [TODO: try different sampling rates, discuss drift/accuracy]</li>
       <li><b>Complementary filter:</b> [TODO: fuse accel + gyro for stable pitch/roll]</li>
