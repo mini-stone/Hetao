@@ -101,14 +101,16 @@
       and include minimal code snippets (not full code).
     </p>
 
-    <h4>Set up the IMU</h4>
+     <!-- 3.1 Set up the IMU -->
+    <h3 id="accelerometer">3.1 Set up the IMU</h3>
 
 <ul>
   <li>
     <b>AD0_VAL:</b>
-    <code>AD0_VAL</code> determines the least significant bit of the IMU’s I<sup>2</sup>C address.
-    On the SparkFun ICM-20948 breakout, the AD0 pin is tied low by default, so
-    <code>AD0_VAL = 0</code> was used to communicate with the sensor successfully.
+    <code>AD0_VAL</code> sets the least significant bit of the IMU’s I<sup>2</sup>C address.
+    In the provided <code>Example1_Basics</code> code, <code>AD0_VAL</code> is set to
+    <code>1</code>, which matches the hardware configuration of the SparkFun ICM-20948
+    breakout used in this lab and allows successful I<sup>2</sup>C communication.
   </li>
 
   <li>
@@ -123,15 +125,45 @@
 <div class="figure">
   <strong>Figure 1.</strong> Serial output from <code>Example1_Basics</code> while rotating, flipping,
   and accelerating the IMU board.
+  <br><br>
+
+  <img src="images/3.1.png"
+       alt="Example1_Basics serial output"
+       style="max-width:100%; height:auto; border-radius:8px;">
 </div>
 
 
     <!-- 3.2 Accelerometer -->
     <h3 id="accelerometer">3.2 Accelerometer</h3>
     <ul>
-      <li><b>Pitch/Roll equations:</b> [TODO: include equations + atan2 usage]</li>
-      <li><b>Static test:</b> [TODO: show output at {-90, 0, 90} degrees for pitch and roll]</li>
-      <li><b>Accuracy / calibration:</b> [TODO: discuss accuracy + optional two-point calibration]</li>
+    <li>
+  <b>Pitch/Roll equations:</b>
+  <br><br>
+
+  <!-- Video -->
+  <div>
+    <div style="font-weight:600; margin-bottom:6px;">
+      Real-time pitch and roll display
+    </div>
+    <video src="videos/3.2.mp4"
+           controls
+           style="max-width:100%; border-radius:8px;">
+    </video>
+  </div>
+
+  <br>
+
+  <!-- Image (code screenshot) -->
+  <div>
+    <div style="font-weight:600; margin-bottom:6px;">
+      Pitch and roll computation code
+    </div>
+    <img src="images/3.2_1.png"
+         alt="Pitch and roll computation code screenshot"
+         style="max-width:100%; height:auto; border-radius:8px;">
+  </div>
+</li>
+
       <li><b>Noise analysis:</b> [TODO: record data, FFT, discuss spectrum + choose cutoff frequency]</li>
       <li><b>Low-pass filter:</b> [TODO: implement LPF and show raw vs filtered plot]</li>
       <li><b>Jupyter plotting:</b> [TODO: time on x-axis, signal on y-axis]</li>
