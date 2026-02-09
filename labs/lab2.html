@@ -71,15 +71,14 @@
       <li><a href="#references">References</a></li>
     </ol>
 
-    <div class="note">
-      NOTE: Keep the final write-up under 1000 words (excluding code blocks/captions if you want to be safe).
-    </div>
+ 
 
     <!-- 1. Overview -->
     <h2 id="overview">1. Overview</h2>
     <p>
-      <!-- Fill in: 3–6 sentences. What you built, why IMU matters, what you measured, what you demonstrated. -->
-      [TODO: Brief overview of adding the ICM-20948 IMU, powering from battery, collecting time-stamped IMU data, filtering, and recording a stunt.]
+      In this lab, an inertial measurement unit (IMU) was integrated with the Artemis board to measure linear acceleration and angular velocity. The SparkFun ICM-20948 IMU was configured and used to collect accelerometer and gyroscope data for estimating the robot’s orientation.
+
+Accelerometer and gyroscope measurements were analyzed in both time and frequency domains, and filtering techniques were applied to reduce noise and drift. A complementary filter was implemented to fuse both sensors, and IMU data were logged and transmitted over Bluetooth to record and analyze the motion of the robot during a driving experiment.
     </p>
 
     <h3>Hardware / Software</h3>
