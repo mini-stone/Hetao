@@ -118,10 +118,6 @@ subsequent labs.
     <!-- 3) Tasks -->
     <section id="tasks" class="cardish">
       <h2>3. Lab Tasks</h2>
-      <p class="small">
-        Below follows tasks 1–8 required by the Lab 1B handout. For each task:
-        explain what you changed, show evidence (screenshot/video), and include minimal code snippets. :contentReference[oaicite:4]{index=4}
-      </p>
 
       <!-- Task 1 -->
 <div class="cardish">
@@ -434,16 +430,7 @@ subsequent labs.
     </li>
   </ul>
 </div>
-<div class="cardish" style="margin-top:.75rem;">
-  <b>Reliability (high-rate streaming)</b>
-  <p>
-    When I increased the notification send rate from the Artemis to the laptop, the laptop did <b>not</b> reliably read
-    every published data point. The receive rate becomes limited by BLE/OS overhead: in Task 5, over ~5 seconds I only
-    received about <b>180</b> timestamps (≈ <b>35 msg/s</b>). Therefore, if the Artemis publishes faster than this practical
-    throughput, the laptop will fall behind and intermediate updates can be missed. In contrast, the batch method in
-    Tasks 6/7 (store in arrays first, then transmit with a command) is more reliable because the Python lists can be
-    checked to confirm the full dataset was received.
-  </p>
+
 </div>
 
     </section>
@@ -453,7 +440,7 @@ subsequent labs.
       <h2>5. 5000-level (Optional): Communication Performance Analysis</h2>
      <!-- Extra_Task_1 — Effective Data Rate and Overhead -->
 <div class="cardish">
-  <h3>Task X — Effective Data Rate and Overhead (PC ↔ Artemis)</h3>
+  <h3> Effective Data Rate and Overhead (PC ↔ Artemis)</h3>
 
   <ul>
     <li><b>Goal:</b> Measure round-trip time (RTT) for a request–reply exchange and compute the effective data rate for different reply sizes (at least 5B and 120B).</li>
@@ -521,7 +508,7 @@ subsequent labs.
     </table>
 
     <!-- FIGURE PLACEHOLDER: screenshot of your printed summary output -->
-    <img src="images/dat_1.png" alt="RTT summary output">
+    <img src="images/data_1.png" alt="RTT summary output">
     <p class="small">Figure 19. Console summary of RTT statistics and computed effective data rate for each reply length.</p>
 
     <!-- FIGURE PLACEHOLDER: Effective Data Rate vs Reply Length plot -->
@@ -555,7 +542,16 @@ subsequent labs.
     </ul>
   </div>
 </div>
-
+<div class="cardish" style="margin-top:.75rem;">
+  <b>Reliability (high-rate streaming)</b>
+  <p>
+    When I increased the notification send rate from the Artemis to the laptop, the laptop did <b>not</b> reliably read
+    every published data point. The receive rate becomes limited by BLE/OS overhead: in Task 5, over ~5 seconds I only
+    received about <b>180</b> timestamps (≈ <b>35 msg/s</b>). Therefore, if the Artemis publishes faster than this practical
+    throughput, the laptop will fall behind and intermediate updates can be missed. In contrast, the batch method in
+    Tasks 6/7 (store in arrays first, then transmit with a command) is more reliable because the Python lists can be
+    checked to confirm the full dataset was received.
+  </p>
     </section>
 
     <!-- 6) References -->
@@ -574,6 +570,10 @@ subsequent labs.
   </div>
 </body>
 </html>
+
+
+
+
 
 
 
