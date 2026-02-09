@@ -169,22 +169,45 @@
       <li><b>Jupyter plotting:</b> [TODO: time on x-axis, signal on y-axis]</li>
     </ul>
 
-    <div class="figure">
-      <strong>Figure X.</strong> Pitch/Roll at {-90, 0, 90} degrees (table/edges used as guides).<br/>
-      [TODO]
-    </div>
-    <div class="figure">
-      <strong>Figure X.</strong> Accelerometer FFT magnitude vs frequency (noise spectrum).<br/>
-      [TODO]
-    </div>
-    <div class="figure">
-      <strong>Figure X.</strong> Raw vs filtered accelerometer signal (time series).<br/>
-      [TODO]
-    </div>
-    <pre><code># TODO: minimal Jupyter/Python snippet for plotting and FFT (keep short)
-</code></pre>
-    <pre><code>// TODO: minimal Arduino snippet for accel reading + pitch/roll + low-pass filter
-</code></pre>
+   <li>
+  <b>Noise analysis and cutoff frequency:</b>
+  <br><br>
+
+  The accelerometer signal shows significant low-frequency content, with most energy
+  concentrated below approximately 4–5 Hz, while higher frequencies are dominated by noise.
+  <br><br>
+
+  Based on the FFT, a low-pass filter cutoff of about 5 Hz was selected. This cutoff retains
+  motion-related information while suppressing high-frequency vibrational noise. Lower
+  cutoffs oversmooth the signal, whereas higher cutoffs allow excessive noise to pass.
+  <br><br>
+
+  <div class="figure">
+    <strong>Figure 3.</strong> Fourier Transform of accelerometer data.
+    <br><br>
+    <img src="images/3.2_2.png"
+         alt="FFT of accelerometer data"
+         style="max-width:100%; height:auto; border-radius:8px;">
+  </div>
+</li>
+<li>
+  <b>Low-pass filtering:</b>
+  <br><br>
+
+  A simple low-pass filter was applied to the accelerometer data to reduce high-frequency
+  noise. Compared to the raw signal, the filtered signal is significantly smoother while
+  preserving the overall motion trend.
+  <br><br>
+
+  <div class="figure">
+    <strong>Figure 4.</strong> Accelerometer signal before and after low-pass filtering.
+    <br><br>
+    <img src="images/3.2_3.png"
+         alt="Accelerometer signal before and after low-pass filtering"
+         style="max-width:100%; height:auto; border-radius:8px;">
+  </div>
+</li>
+
 
     <!-- 3.3 Gyroscope -->
     <h3 id="gyroscope">3.3 Gyroscope</h3>
