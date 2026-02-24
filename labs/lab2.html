@@ -66,8 +66,7 @@
       <li><a href="#overview">Overview</a></li>
     
       <li><a href="#lab-tasks">Lab Tasks</a></li>
-      <li><a href="#discussion">Discussion</a></li>
-      <li><a href="#optional">5000-level (Optional)</a></li>
+    
       <li><a href="#references">References</a></li>
     </ol>
 
@@ -286,47 +285,104 @@
   </div>
 </li>
 
-    </ul>
-
-    <div class="figure">
-      <strong>Figure X.</strong> Gyro-derived pitch/roll/yaw at different orientations.<br/>
-      [TODO]
-    </div>
-    <div class="figure">
-      <strong>Figure X.</strong> Complementary filter output vs accel-only vs gyro-only.<br/>
-      [TODO]
-    </div>
+  
+   
     <pre><code>// TODO: minimal Arduino snippet for gyro integration + complementary filter
 </code></pre>
 
-    <!-- 3.4 Sample Data -->
-    <h3 id="sample-data">3.4 Sample Data</h3>
+   <section class="page-section" id="sample-data">
+  <div class="container">
+
+    <h2 class="page-section-heading text-center text-uppercase text-secondary mb-4">
+      Sample Data
+    </h2>
+
+    <!-- =======================
+         Part 1: Evidence
+    ======================== -->
+    <h3>Part 1: Data Collection Evidence</h3>
+
+    <p>
+      The following video demonstrates the board collecting IMU data for several seconds
+      and successfully transmitting the data to the computer.
+    </p>
+
+    <video controls width="100%" style="max-width: 800px;">
+      <source src="videos/3.4.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+
+    <p class="mt-4">
+      The screenshot below shows the optimized <code>loop()</code> function used for
+      non-blocking IMU sampling and data storage.
+    </p>
+
+    <img
+      src="images/3.4.png"
+      class="img-fluid"
+      alt="Optimized loop code"
+      style="max-width: 800px;"
+    />
+
+    <!-- =======================
+         Part 2: Questions
+    ======================== -->
+    <h3 class="mt-5">Part 2: Questions and Answers</h3>
+
+    <h5>1. Speed up execution of the main loop</h5>
     <ul>
-      <li><b>Speed up main loop:</b> [TODO: no delays, avoid waiting on IMU-ready, reduce Serial prints]</li>
-      <li><b>Sampling speed:</b> [TODO: how fast you can sample + compare loop rate vs IMU update rate]</li>
-      <li><b>Data logging design:</b>
-        <ul>
-          <li>[TODO: one big array vs multiple arrays (accel vs gyro) justification]</li>
-          <li>[TODO: data type choice (int/float/double/string) justification]</li>
-          <li>[TODO: memory budget on Artemis + seconds of data stored]</li>
-        </ul>
+      <li>
+        The main loop was made non-blocking by continuously checking
+        <code>myICM.dataReady()</code> instead of waiting for new IMU data.
       </li>
-      <li><b>Time-stamped arrays:</b> [TODO: start/stop logging flags in loop]</li>
-      <li><b>Bluetooth transfer:</b> [TODO: demonstrate ≥ 5 seconds logged and sent to PC over BLE]</li>
+      <li>
+        All debug delays and continuous <code>Serial.print</code> statements were removed.
+      </li>
+      <li>
+        The effective sampling rate was measured by counting the number of samples collected
+        per second.
+      </li>
+      <li>
+        The main loop runs significantly faster than the IMU produces new data; most loop
+        iterations simply check the data-ready flag.
+      </li>
     </ul>
 
-    <div class="figure">
-      <strong>Figure X.</strong> Console output showing sampling rate / loop timing measurement.<br/>
-      [TODO]
-    </div>
-    <div class="figure">
-      <strong>Figure X.</strong> Example plot of logged IMU data (≥ 5 s) after BLE transfer.<br/>
-      [TODO]
-    </div>
-    <pre><code>// TODO: minimal Arduino snippet for (1) fast loop logging into arrays (2) start/stop flags (3) BLE send
-</code></pre>
-    <pre><code># TODO: minimal Python snippet for receiving, parsing, and plotting transferred IMU arrays
-</code></pre>
+    <h5>2. Store time-stamped IMU data in arrays</h5>
+    <p>
+      Time-stamped IMU data was collected in the main loop and stored in arrays when a
+      recording flag was enabled. The flag was controlled using serial commands to start
+      and stop data recording. After recording stopped, the buffered data was transmitted
+      to the computer.
+    </p>
+
+    <h5>3. Data storage considerations</h5>
+    <ul>
+      <li>
+        Separate arrays were used for accelerometer, gyroscope, and attitude data to keep
+        data organization simple and transmission straightforward.
+      </li>
+      <li>
+        Sensor data was stored as <code>float</code> values to provide sufficient precision
+        while minimizing memory usage. Timestamps were stored as
+        <code>unsigned long</code>.
+      </li>
+      <li>
+        Each sample requires approximately 36 bytes of memory. Given the available RAM on
+        the Artemis board, several thousand samples can be stored, corresponding to
+        tens of seconds of IMU data depending on the sampling rate.
+      </li>
+    </ul>
+
+    <h5>4. Capture at least 5 seconds of IMU data and transmit over Bluetooth</h5>
+    <p>
+      The system was able to capture more than 5 seconds of IMU data by buffering samples
+      in memory and transmitting them to the computer after recording stopped. The duration
+      was verified using the first and last timestamps in the received data.
+    </p>
+
+  </div>
+</section>
 
     <!-- 3.5 Record a stunt -->
     <h3 id="stunt">3.5 Record a stunt!</h3>
@@ -348,33 +404,60 @@
       <li>[TODO: batteries disconnected, shared batteries returned to chargers, AA returned to TAs]</li>
     </ul>
 
-    <!-- 4. Discussion -->
-    <h2 id="discussion">4. Discussion</h2>
-    <ul>
-      <li><b>Key takeaways:</b> [TODO]</li>
-      <li><b>Biggest issues & fixes:</b> [TODO]</li>
-      <li><b>Filter design choices:</b> [TODO: cutoff frequency reasoning + complementary filter parameter]</li>
-      <li><b>What you would improve next:</b> [TODO]</li>
-    </ul>
+<section class="page-section" id="references">
+  <div class="container">
 
-    <!-- 5. 5000-level (Optional) -->
-    <h2 id="optional">5. 5000-level (Optional)</h2>
-    <p>
-      [TODO: If required. Otherwise: "No additional tasks for 5000-level students in this lab."]
-    </p>
+    <h2 class="page-section-heading text-center text-uppercase text-secondary mb-4">
+      References
+    </h2>
 
-    <!-- 6. References -->
-    <h2 id="references">6. References</h2>
     <ol>
-      <li>[TODO: SparkFun ICM-20948 library / datasheet / course handout link]</li>
-      <li>[TODO: Any FFT tutorial used]</li>
-      <li>[TODO: Any additional sources]</li>
+      <li>
+        SparkFun Electronics,
+        <em>ICM-20948 9DoF IMU Arduino Library</em>.
+        <br>
+        https://github.com/sparkfun/SparkFun_ICM-20948_ArduinoLibrary
+      </li>
+
+      <li>
+        Arduino,
+        <em>millis() — Arduino Reference</em>.
+        <br>
+        https://www.arduino.cc/reference/en/language/functions/time/millis/
+      </li>
+
+      <li>
+        Ambiq Micro,
+        <em>Apollo3 Blue Microcontroller Datasheet</em>.
+        <br>
+        https://ambiq.com/apollo3-blue/
+      </li>
+
+      <li>
+        Cornell University,
+        <em>ECE 5160: Fast Robots — Lab Documentation</em>.
+      </li>
     </ol>
 
-    <hr/>
-    <p class="meta">
-      Hosted on GitHub Pages.
+  </div>
+</section>
+
+<section class="page-section" id="stunt">
+  <div class="container">
+
+    <h2 class="page-section-heading text-center text-uppercase text-secondary mb-4">
+      3.5 Record a Stunt
+    </h2>
+
+    <p>
+      Due to a hardware issue, the battery compartment of the remote controller could not be opened at the time of this submission.
+      As a result, the stunt recording could not be completed.
+      This section will be updated with a demonstration video once the issue is resolved.
     </p>
+
+  </div>
+</section>
+
 
   </div>
 </body>
