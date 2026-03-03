@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lab 4 | Motors and Open Loop Control</title>
+
+  <!-- Match Lab3 style: minimal, markdown-like -->
+  <style>
+    :root{
+      --text:#24292f;
+      --muted:#57606a;
+      --border:#d0d7de;
+      --bg:#ffffff;
+      --codebg:#f6f8fa;
+      --link:#0969da;
+    }
+    html,body{background:var(--bg); color:var(--text); margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji"; line-height:1.6;}
+    .wrap{max-width: 920px; margin: 0 auto; padding: 28px 20px 60px;}
+    a{color:var(--link); text-decoration:none;}
+    a:hover{text-decoration:underline;}
+    h1{font-size: 2rem; margin: 10px 0 8px;}
+    h2{font-size: 1.5rem; margin: 26px 0 10px; padding-top: 6px; border-top: 1px solid var(--border);}
+    h3{font-size: 1.15rem; margin: 18px 0 8px;}
+    p{margin: 8px 0;}
+    .meta{color:var(--muted); margin: 2px 0;}
+    .toc-title{margin-top: 18px; font-weight:600;}
+    ol{margin: 8px 0 12px 22px;}
+    ul{margin: 6px 0 10px 22px;}
+    code{background:var(--codebg); padding: 2px 6px; border-radius: 6px; font-family: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace; font-size: 0.95em;}
+    pre{background:var(--codebg); padding: 12px 14px; border-radius: 10px; overflow:auto; border:1px solid var(--border);}
+    pre code{background:transparent; padding:0;}
+    .figure{
+      border:1px dashed var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      margin: 10px 0;
+      color: var(--muted);
+      background: #fff;
+    }
+    .figure strong{color: var(--text);}
+    .note{
+      border-left: 4px solid var(--border);
+      padding: 10px 12px;
+      background: #fff;
+      color: var(--muted);
+      margin: 12px 0;
+      border-radius: 8px;
+    }
+    .back{display:inline-block; margin-bottom: 10px;}
+    hr{border:none; border-top:1px solid var(--border); margin: 18px 0;}
+    img{max-width:100%; height:auto; border-radius:8px;}
+    video{max-width:100%; border-radius:8px;}
+    table{border-collapse: collapse; width:100%; margin: 10px 0; font-size: 0.98em;}
+    th,td{border:1px solid var(--border); padding:8px 10px; text-align:left;}
+    th{background: var(--codebg);}
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+
+    <a class="back" href="../index.html">← Back to Home</a>
+
+    <h1>Lab 4: Motors and Open Loop Control</h1>
+    <p class="meta">Course: ECE 5160 Fast Robots (Spring 2026)</p>
+    <p class="meta">Student: Hetao Yin (Hubery) | NetID: hy668</p>
+
+    <p class="toc-title">Table of Contents</p>
+    <ol>
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#prelab">Prelab</a></li>
+      <li><a href="#lab-tasks">Lab Tasks</a></li>
+      <li><a href="#optional-5000">Optional (5000-level)</a></li>
+      <li><a href="#references">References</a></li>
+    </ol>
+
+    <!-- 1. Overview -->
+    <h2 id="overview">1. Overview</h2>
+    <p>
+      In this lab, I built an untethered, open-loop motor control system using the SparkFun RedBoard Artemis Nano and dual H-bridge
+      motor driver boards. The goals were:
+      (1) wire and power the motor drivers safely (current-limited bench supply first),
+      (2) use <code>analogWrite()</code> PWM to regulate motor driver output power,
+      (3) integrate two motors on the car platform,
+      (4) characterize the minimum PWM required for forward motion and on-axis turns on the ground,
+      (5) calibrate left/right motor outputs for straighter driving,
+      and (6) demonstrate an open-loop motion sequence with turns.
+    </p>
+
+    <h3>Hardware / Software</h3>
+    <ul>
+      <li>Board: SparkFun RedBoard Artemis Nano</li>
+      <li>Motor driver: dual H-bridge motor driver board (two channels paralleled per motor)</li>
+      <li>Motors: RC car drive motors (left/right)</li>
+      <li>Power: bench supply (debug) + 3.7V LiPo (untethered) for motor VIN; separate supply for Artemis</li>
+      <li>IDE: Arduino IDE</li>
+      <li>Measurement: Tektronix oscilloscope</li>
+    </ul>
+
+    <div class="note">
+      <b>Evidence note:</b> This page includes placeholders for photos/videos/screenshots. I will upload the referenced media files
+      to <code>labs/images/</code> and update the links if needed.
+    </div>
+
+    <!-- 2. Prelab -->
+    <h2 id="prelab">2. Prelab</h2>
+
+    <h3 id="prelab-plan">2.1 Wiring / Layout Plan</h3>
+    <p>
+      I planned the physical placement of both motor driver boards close to the motors to keep the high-current motor leads short.
+      The Artemis was mounted away from motor power wiring where possible to reduce EMI coupling into control lines.
+      Control signals (PWM/direction) were routed cleanly from Artemis to each driver.
+      Motor VIN and Artemis power were kept on separate supplies (but all grounds are shared).
+    </p>
+
+    <div class="figure">
+      <strong>Figure 1.</strong> Wiring diagram (overall system: Artemis + two motor drivers + two motors + separate batteries + common GND).
+      <br><br>
+      <!-- TODO: upload image -->
+      <img src="images/lab4_fig1_wiring_diagram.png" alt="Lab4 wiring diagram (placeholder)">
+      <p class="meta">Placeholder: <code>images/lab4_fig1_wiring_diagram.png</code></p>
+    </div>
+
+    <h3 id="prelab-pins">2.2 Pin Selection</h3>
+    <p>
+      I used four Artemis GPIO/PWM-capable pins to control two motors (two inputs per motor). Each motor driver board uses
+      two paralleled input pins per motor channel (A/B inputs tied together), so each motor is controlled by two Artemis signals:
+      one PWM and one complementary input (0) to set direction.
+    </p>
+    <ul>
+      <li>Left motor: <code>PIN_L1</code>, <code>PIN_L2</code></li>
+      <li>Right motor: <code>PIN_R1</code>, <code>PIN_R2</code></li>
+    </ul>
+
+    <div class="figure">
+      <strong>Figure 2.</strong> Photo of Artemis pin connections (close-up).
+      <br><br>
+      <!-- TODO: upload image -->
+      <img src="images/lab4_fig2_artemis_pins.jpg" alt="Artemis pin connections (placeholder)">
+      <p class="meta">Placeholder: <code>images/lab4_fig2_artemis_pins.jpg</code></p>
+    </div>
+
+    <h3 id="prelab-power">2.3 Power Strategy (Why Separate Supplies)</h3>
+    <p>
+      The motors draw high transient current (startup / stall), which can cause voltage droop and noise. To avoid brownouts and
+      unstable behavior on the Artemis, I powered the Artemis and motor VIN separately. All grounds (Artemis GND, driver GND,
+      motor battery negative) were tied together to ensure a common reference for PWM control signals.
+    </p>
+
+    <div class="figure">
+      <strong>Figure 3.</strong> Bench supply setup (VIN voltage/current-limit) used during initial debug.
+      <br><br>
+      <!-- TODO: upload image -->
+      <img src="images/lab4_fig3_bench_supply.jpg" alt="Bench power supply setup (placeholder)">
+      <p class="meta">Placeholder: <code>images/lab4_fig3_bench_supply.jpg</code></p>
+    </div>
+
+    <!-- 3. Lab Tasks -->
+    <h2 id="lab-tasks">3. Lab Tasks</h2>
+
+    <h3 id="task1">3.1 Task 1: Single Motor Driver Bring-up (Bench Supply + Current Limit)</h3>
+    <p>
+      I connected one motor driver board to the Artemis and powered the driver VIN from a current-limited bench supply to reduce
+      risk during debugging. I verified control signals, driver enable, and motor rotation before switching to battery power.
+    </p>
+
+    <ul>
+      <li><b>Reasonable bench supply settings:</b> VIN set to approximately the LiPo operating range (<code>~3.7–4.2V</code>).
+        I started with a conservative current limit and increased it only as needed to allow motor startup.</li>
+      <li><b>Common ground:</b> Artemis GND, driver GND, and supply negative were connected.</li>
+      <li><b>Driver enable:</b> <code>nSLEEP</code> was held high (enabled) during tests.</li>
+    </ul>
+
+    <div class="figure">
+      <strong>Figure 4.</strong> Motor driver wiring close-up (VIN/GND/VMM and input pins).
+      <br><br>
+      <!-- TODO: upload image -->
+      <img src="images/lab4_fig4_driver_wiring.jpg" alt="Motor driver wiring close-up (placeholder)">
+      <p class="meta">Placeholder: <code>images/lab4_fig4_driver_wiring.jpg</code></p>
+    </div>
+
+    <h3 id="task2">3.2 Task 2: PWM Output Control (analogWrite + Oscilloscope)</h3>
+    <p>
+      I used <code>analogWrite()</code> to generate PWM signals on the Artemis and demonstrated (with an oscilloscope) that changing
+      duty cycle changes the motor driver output power. I measured the PWM waveform at the motor driver output and verified that
+      duty cycle changes correspond to changes in motor speed.
+    </p>
+
+    <div class="figure">
+      <strong>Code Snippet 1.</strong> Arduino PWM test code used to sweep duty cycle (placeholder screenshot).
+      <br><br>
+      <!-- TODO: upload code screenshot OR replace with <pre><code>...</code></pre> -->
+      <img src="images/lab4_code1_pwm_test.png" alt="PWM test code screenshot (placeholder)">
+      <p class="meta">Placeholder: <code>images/lab4_code1_pwm_test.png</code></p>
+    </div>
+
+    <div class="figure">
+      <strong>Figure 5.</strong> Oscilloscope capture of PWM at motor driver output (duty cycle example).
+      <br><br>
+      <!-- TODO: upload image -->
+      <img src="images/lab4_fig5_scope_pwm.jpg" alt="Oscilloscope PWM capture (placeholder)">
+      <p class="meta">Placeholder: <code>images/lab4_fig5_scope_pwm.jpg</code></p>
+    </div>
+
+    <div class="figure">
+      <strong>Figure 6.</strong> Oscilloscope capture showing a different duty cycle (compare to Figure 5).
+      <br><br>
+      <!-- TODO: upload image -->
+      <img src="images/lab4_fig6_scope_pwm_2.jpg" alt="Oscilloscope PWM capture (second duty) (placeholder)">
+      <p class="meta">Placeholder: <code>images/lab4_fig6_scope_pwm_2.jpg</code></p>
+    </div>
+
+    <h3 id="task3">3.3 Task 3: Car Disassembly and Motor Wiring</h3>
+    <p>
+      I disassembled the RC car and isolated the motor and battery leads from the original control PCB. I routed the motor leads
+      to the motor driver outputs and ensured that all high-current wiring was secure and strain-relieved.
+    </p>
+
+    <div class="figure">
+      <strong>Figure 7.</strong> Car disassembly / motor lead access (photo).
+      <br><br>
+      <!-- TODO: upload image -->
+      <img src="images/lab4_fig7_car_disassembly.jpg" alt="Car disassembly photo (placeholder)">
+      <p class="meta">Placeholder: <code>images/lab4_fig7_car_disassembly.jpg</code></p>
+    </div>
+
+    <h3 id="task4">3.4 Task 4: Wheels Off the Ground (Forward/Reverse Verification)</h3>
+    <p>
+      With the car elevated (wheels free-spinning), I verified that each motor could run in both directions by swapping the input
+      states (IN1/IN2). This test reduces load and makes it easier to confirm correct wiring and control logic.
+    </p>
+
+    <div class="figure">
+      <strong>Video 1.</strong> Wheels off the ground: motor direction test (forward / reverse).
+      <br><br>
+      <!-- TODO: upload video -->
+      <video controls>
+        <source src="images/lab4_vid1_wheels_off_ground.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <p class="meta">Placeholder: <code>images/lab4_vid1_wheels_off_ground.mp4</code></p>
+    </div>
+
+    <h3 id="task5">3.5 Task 5: Battery Power for Motor VIN (Untethered)</h3>
+    <p>
+      After validating with a bench supply, I powered motor VIN from a 3.7V LiPo battery. I confirmed the motors still respond to
+      <code>analogWrite()</code> control and that the Artemis remains stable on its separate supply.
+    </p>
+
+    <div class="figure">
+      <strong>Figure 8.</strong> Motor VIN battery wiring (photo).
+      <br><br>
+      <!-- TODO: upload image -->
+      <img src="images/lab4_fig8_motor_battery.jpg" alt="Motor battery wiring (placeholder)">
+      <p class="meta">Placeholder: <code>images/lab4_fig8_motor_battery.jpg</code></p>
+    </div>
+
+    <h3 id="task6">3.6 Task 6: Second Motor Integration</h3>
+    <p>
+      I replicated the wiring and control setup for the second motor using a second motor driver board. Both motors share the same
+      motor VIN battery supply, while the Artemis uses a separate supply. I verified independent left/right motor control.
+    </p>
+
+    <div class="figure">
+      <strong>Figure 9.</strong> Both motor drivers installed and wired (photo).
+      <br><br>
+      <!-- TODO: upload image -->
+      <img src="images/lab4_fig9_two_drivers.jpg" alt="Two motor drivers installed (placeholder)">
+      <p class="meta">Placeholder: <code>images/lab4_fig9_two_drivers.jpg</code></p>
+    </div>
+
+    <h3 id="task7">3.7 Task 7: Reassembly and On-Ground Bring-up</h3>
+    <p>
+      I reassembled the car with all electronics secured inside the chassis. I added a short timeout in code to stop the motors
+      automatically after each test to reduce risk during debugging.
+    </p>
+
+    <div class="figure">
+      <strong>Figure 10.</strong> Internal mounting / strain relief (photo).
+      <br><br>
+      <!-- TODO: upload image -->
+      <img src="images/lab4_fig10_mounting.jpg" alt="Internal mounting photo (placeholder)">
+      <p class="meta">Placeholder: <code>images/lab4_fig10_mounting.jpg</code></p>
+    </div>
+
+    <h3 id="task8">3.8 Task 8: Minimum PWM Threshold (Forward + On-axis Turns)</h3>
+    <p>
+      On the ground, I explored the lower limit of PWM values that reliably produce:
+      (1) forward motion and (2) on-axis turns. As expected, the PWM required to <i>start</i> moving from rest was slightly higher
+      than the PWM required to <i>keep</i> moving once already in motion (static friction vs kinetic friction).
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Test</th>
+          <th>Start PWM (min)</th>
+          <th>Running PWM (min)</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Forward</td>
+          <td>TODO</td>
+          <td>TODO</td>
+          <td>TODO: brief observation</td>
+        </tr>
+        <tr>
+          <td>On-axis Turn (Left)</td>
+          <td>TODO</td>
+          <td>TODO</td>
+          <td>TODO: brief observation</td>
+        </tr>
+        <tr>
+          <td>On-axis Turn (Right)</td>
+          <td>TODO</td>
+          <td>TODO</td>
+          <td>TODO: brief observation</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="figure">
+      <strong>Video 2.</strong> Demonstration of minimum PWM threshold tests (forward + turns).
+      <br><br>
+      <!-- TODO: upload video -->
+      <video controls>
+        <source src="images/lab4_vid2_min_pwm_tests.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <p class="meta">Placeholder: <code>images/lab4_vid2_min_pwm_tests.mp4</code></p>
+    </div>
+
+    <h3 id="task9">3.9 Task 9: Straight-Line Calibration (Calibration Factor)</h3>
+    <p>
+      If the two motors do not spin at the same rate, the robot will drift. I implemented a calibration factor to compensate for
+      left/right mismatch (e.g., scaling one side’s PWM). I then recorded a video of the robot following a straight reference line
+      (tape) for at least 2m / 6ft. The robot starts centered on the line and still partially overlaps the line at the end.
+    </p>
+
+    <div class="figure">
+      <strong>Code Snippet 2.</strong> Calibration factor implementation (placeholder screenshot).
+      <br><br>
+      <!-- TODO: upload code screenshot -->
+      <img src="images/lab4_code2_calibration.png" alt="Calibration code screenshot (placeholder)">
+      <p class="meta">Placeholder: <code>images/lab4_code2_calibration.png</code></p>
+    </div>
+
+    <div class="figure">
+      <strong>Video 3.</strong> Straight-line test (≥ 2m / 6ft) following tape line.
+      <br><br>
+      <!-- TODO: upload video -->
+      <video controls>
+        <source src="images/lab4_vid3_straight_line.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <p class="meta">Placeholder: <code>images/lab4_vid3_straight_line.mp4</code></p>
+    </div>
+
+    <h3 id="task10">3.10 Task 10: Open-loop, Untethered Motion Sequence (Add Turns)</h3>
+    <p>
+      Finally, I demonstrated open-loop untethered control using a pre-programmed motion sequence that includes turns. The robot
+      executes timed segments (forward / on-axis turn / forward / turn / stop) without any feedback control.
+    </p>
+
+    <div class="figure">
+      <strong>Code Snippet 3.</strong> Open-loop motion sequence (placeholder screenshot).
+      <br><br>
+      <!-- TODO: upload code screenshot -->
+      <img src="images/lab4_code3_open_loop_sequence.png" alt="Open-loop sequence code screenshot (placeholder)">
+      <p class="meta">Placeholder: <code>images/lab4_code3_open_loop_sequence.png</code></p>
+    </div>
+
+    <div class="figure">
+      <strong>Video 4.</strong> Open-loop, untethered demo with turns.
+      <br><br>
+      <!-- TODO: upload video -->
+      <video controls>
+        <source src="images/lab4_vid4_open_loop_demo.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <p class="meta">Placeholder: <code>images/lab4_vid4_open_loop_demo.mp4</code></p>
+    </div>
+
+    <!-- Optional 5000-level -->
+    <h2 id="optional-5000">4. Optional (5000-level)</h2>
+
+    <h3 id="pwm-frequency">4.1 PWM Frequency Discussion</h3>
+    <p>
+      <b>[Optional]</b> I investigated the default PWM frequency used by <code>analogWrite()</code> on the Artemis and discussed
+      whether it is fast enough for motor control. I also considered the potential benefits of increasing PWM frequency using a
+      hardware timer configuration (e.g., reduced audible noise and smoother current ripple), along with possible tradeoffs.
+    </p>
+
+    <div class="figure">
+      <strong>Figure 11 (Optional).</strong> Scope measurement of PWM frequency (input or output).
+      <br><br>
+      <!-- TODO: upload image -->
+      <img src="images/lab4_fig11_pwm_freq_optional.jpg" alt="PWM frequency scope capture (placeholder)">
+      <p class="meta">Placeholder: <code>images/lab4_fig11_pwm_freq_optional.jpg</code></p>
+    </div>
+
+    <h3 id="min-running-pwm">4.2 Minimum Running PWM vs Start PWM</h3>
+    <p>
+      <b>[Optional]</b> In addition to the minimum PWM required to start motion from rest, I measured the minimum PWM that can
+      maintain motion once the robot is already moving. This demonstrates the effect of static vs kinetic friction and suggests
+      a strategy of starting with a higher PWM and then dropping to a lower steady-state PWM.
+    </p>
+
+    <!-- References -->
+    <h2 id="references">5. References</h2>
+    <ul>
+      <li>Lab 4 handout: Motors and Open Loop Control (ECE 5160 Fast Robots)</li>
+      <li>Motor driver datasheet / hookup guide (board used in lab)</li>
+      <li>Arduino reference: <code>analogWrite()</code></li>
+    </ul>
+
+  </div>
+</body>
+</html>
